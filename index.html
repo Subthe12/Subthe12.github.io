@@ -40,14 +40,39 @@
 		.li:hover {
 			font-size:30px;
 		}
-		#note#1	{
+		#note1{
 			margin-left:200px;
+		}
+		aside {
+			position: fixed;
+			top: 5px;
+			right: 5px;
+			background-color: #f0f0f0;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			opacity: 0.1;
+			transition: opacity 0.5s ease;
+		}
+		@media (hover: none) {
+			aside {
+				opacity: 0.1;
+			}
+		}
+		aside:hover {
+			opacity: 1.0;
 		}
 	</style>
 
 </HEAD>
 <BODY>
-
+<aside>
+	<ul>
+		<li>	<a href="#integers-start"> Go to Integers Section</a></li>
+		<li>	<a href="#add-sub-integer"> Go to Addition and Subtraction of Integers</a></li>
+		<li>	<a href="#sets-start"> Go to Sets Section</a></li>
+	</ul>	
+</aside>
 	<H1 ALIGN ="center">
 		<span style="color:#4682B4">
 			Summary
@@ -55,7 +80,7 @@
 	</H1>
 	<hr>
 
-	<H2 ALIGN = "center">
+	<H2 ALIGN = "center" id = "integers-start">
 		<span style="color:#5F9EA0">
 			Integers
 		</span>
@@ -96,12 +121,12 @@
 <p>	
 	<sup id="numberline">A number line</sup>
 </p>
-	<p id="note#1">
+	<p id="note1">
 		Integers are used in various real-life situations, such as measuring temperature (above and below zero), 
 		representing financial transactions (gains and losses), and indicating elevations (above and below sea level).
 </p>
 	<h2 align="center">	
-		<span style="color:#000000">
+		<span style="color:#000000" id="add-sub-integer">
 			<u>
 		Addition and Subtraction of Integers
 		</u>
@@ -125,7 +150,7 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 	</ul>
 	<hr>
                                 <!-- Starting With Sets -->
-	<h2 align="center">
+	<h2 align="center" id="sets-start">
 		<span style="color:#7c5c37">
 			<u>
 				Sets
@@ -168,6 +193,7 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 		<li class="li">Infinite Set: A set with an uncountable number of elements.</li>
 		<li class="li">Equal Sets: Two sets that contain exactly the same elements.</li>
 		<li class="li">Equivalent Sets: Sets that have the same number of elements, even if the elements are different.</li>
+		<hr>
 		
 </BODY>
 </HTML>
