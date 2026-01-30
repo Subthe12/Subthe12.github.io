@@ -4,7 +4,9 @@
 		Summary
 	</TITLE>
 	<style>
-
+		html {
+			scroll-behavior: smooth;
+		}
 		BODY {
 			background-color:#c5dafc;
 			font-family:serif,sans-serif;
@@ -62,6 +64,25 @@
 			list-style-type: none;	
 			padding:0;
 			margin: 0;	
+		}
+		#button-next {
+			display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745; /* Green */
+    color: white;
+    text-decoration: none; /* Removes the underline */
+    border-radius: 4px;
+    font-family: sans-serif;
+	transition: background-color 0.3s ease;
+		
+		 
+		}
+		#button-next:hover {
+			background-color: rgb(3, 82, 255);
+		}
+		#next {
+			text-align: right;
+			margin-right: 200px;
 		}
 	</style>
 <link rel="icon" type="image/x-icon" href="favicon.jpg">
@@ -149,7 +170,10 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 	</li>
 	</ul>
 	<hr>
-
-		
+	<div id="Next">
+   <a href="file1.html" id="button-next">
+	Next
+   </a>
+</div>
 </BODY>
 </HTML>
