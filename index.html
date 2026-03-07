@@ -75,6 +75,30 @@
 </HEAD>
 
 <BODY>
+	<button id="play-btn" style="padding: 10px 20px; cursor: pointer;">
+  🎵 Play Background Music
+</button>
+
+<script>
+  // Ensure 'mixkit-majestic-475.mp3' is in the same folder as this file
+  const audio = new Audio('mixkit-majestic-475.mp3'); 
+  audio.loop = true;
+  audio.volume = 1; 
+
+  // This finds the button above by its ID
+  const playButton = document.getElementById('play-btn');
+
+  playButton.addEventListener('click', () => {
+    audio.play()
+      .then(() => {
+        // Success! Hide the button
+        playButton.style.display = 'none';
+      })
+      .catch(error => {
+        console.error("Playback failed:", error);
+      });
+  }); 
+</script>
 
 	<H1 ALIGN ="center">
 		<span style="color:#4682B4">
