@@ -15,12 +15,6 @@
 			
 
 		}
-		#play-btn {
-  transition: opacity 0.5s ease;
-}
-.hidden {
-  opacity: 0;
-  pointer-events: none;
 
 		p {
 			color:#db1c0b;
@@ -56,7 +50,7 @@
 			display: inline-block;
     padding: 10px 20px;
     background-color: #ff0000; /* Green */
-    color: rgb(3,82, 255);
+    color: rgb(255, 255, 255);
     text-decoration: none; /* Removes the underline */
     border-radius: 4px;
     font-family: sans-serif;
@@ -65,49 +59,22 @@
 		 
 		}
 		#button-next:hover {
-			background-color: rgb(3, 82, 255);
-			color:#ff0000;
+			background-color: rgb(0, 82, 255);
+			color:#ffffff;
 		}
 		#next {
 			text-align: right;
 			margin-right: 200px;
 		}
+		#content {
+			margin-left: 200px;
+			color:g#00b7ff;
 		}
 	</style>
 <link rel="icon" type="image/x-icon" href="C:\Users\ishaan\Downloads\favicon.jpg">
 </HEAD>
 
 <BODY>
-	<button id="play-btn" style="padding: 12px 24px; cursor: pointer; border-radius: 8px;">
-  🎵 Enter Experience
-</button>
-
-<script>
-  const audio = new Audio('mixkit-majestic-475.mp3'); 
-  audio.loop = true;
-  audio.volume = 0; // Start at total silence
-
-  const playButton = document.getElementById('play-btn');
-
-  playButton.addEventListener('click', () => {
-    audio.play();
-    playButton.style.display = 'none';
-
-    // The Fade-In Logic
-    const targetVolume = 0.4; // Our final volume (40%)
-    const fadeSpeed = 0.02;   // How much to increase each step
-    
-    const fadeIn = setInterval(() => {
-      if (audio.volume < targetVolume) {
-        // Simple math: Current Volume + 0.02
-        audio.volume = Math.min(targetVolume, audio.volume + fadeSpeed);
-      } else {
-        // Stop the timer once we hit the target
-        clearInterval(fadeIn);
-      }
-    }, 100); // Runs every 100ms (0.1 seconds)
-  });
-</script>
 
 	<H1 ALIGN ="center">
 		<span style="color:#4682B4">
@@ -115,6 +82,18 @@
 		</span>
 	</H1>
 	<hr>
+		<h2 id="content">
+			<u>Contents</u>
+		</h2>
+		<ul>
+			<li>
+				<a href="C:\Users\ishaan\OneDrive\Desktop\Coding\Codes\Summary.html" id="content">Sets</a>
+			</li>
+			<li>
+				<a href="C:\Users\ishaan\OneDrive\Desktop\Coding\Codes\file.1-Summary.html" id="content">Integers</a>
+			</li>
+			
+		</ul>
 	<H2 ALIGN = "center" id = "integers-start">
 		<span style="color:#5F9EA0">
 			Integers
@@ -185,7 +164,7 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 	</ul>
 	<hr>
 	<div id="Next">
-   <a href="file1.html" id="button-next">
+   <a href="C:\Users\ishaan\OneDrive\Desktop\Coding\Codes\file.1-Summary.html" id="button-next">
 	Next
    </a>
 </div>
