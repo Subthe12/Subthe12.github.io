@@ -30,7 +30,26 @@
 		.li:hover {
 			font-size:30px;
 		}
-			#button-next {
+			#button-back {
+			display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745; /* Green */
+    color: white;
+    text-decoration: none; /* Removes the underline */
+    border-radius: 4px;
+    font-family: sans-serif;
+	transition: background-color 0.3s ease;
+		
+		 
+		}
+		#button-back:hover {
+			background-color: rgb(3, 82, 255);
+		}
+		#Back {
+			text-align: left;
+			margin-left: 200px;
+		}
+					#button-next {
 			display: inline-block;
     padding: 10px 20px;
     background-color: #28a745; /* Green */
@@ -45,10 +64,10 @@
 		#button-next:hover {
 			background-color: rgb(3, 82, 255);
 		}
-		#next {
-			text-align: left;
-			margin-left: 200px;
-		}
+		#Next {
+			text-align: right;
+			margin-right: 200px;
+			
 			aside {
 			width: 150px;
 			height:100px;
@@ -117,9 +136,13 @@
 		<li class="li">Equivalent Sets: Sets that have the same number of elements, even if the elements are different.</li>
 		<hr>
          </ul>
-		 <div id="Next">
-   <a href="index.html" id="button-next">
+		 <div id="Back">
+   <a href="index.html" id="button-back">
 	Back
+   </a>
+			 <div id="Next">
+   <a href="file2.html" id="button-next">
+	Next
    </a>
  
     </BODY>
