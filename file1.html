@@ -84,91 +84,13 @@
 			 float: right;
 			 
 		}
-			.counter-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-align: center;
-            min-width: 250px;
-        }
-
-        #display {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #1a73e8;
-            margin: 1rem 0;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        button {
-            padding: 12px 24px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        #incrementBtn {
-            background-color: #1a73e8;
-            color: white;
-        }
-
-        #resetBtn {
-            background-color: #dadce0;
-            color: #3c4043;
-        }
-
-        button:hover {
-            opacity: 0.8;
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
+			
 </style>
     </HEAD>
     <BODY>
-		<div class="counter-card">
-        <h2>Babar Pet phatao</h2>
-        <div id="display">0</div>
-        <div class="controls">
-            <button id="incrementBtn">Count Up</button>
-            <button id="resetBtn">Reset</button>
-        </div>
-    </div>
+	
 
-    <script>
-        // Store the state
-        let count = 0;
-
-        // Select the HTML elements
-        const display = document.getElementById('display');
-        const incrementBtn = document.getElementById('incrementBtn');
-        const resetBtn = document.getElementById('resetBtn');
-
-        // Function to update the screen
-        function updateDisplay() {
-            display.textContent = count;
-        }
-
-        // Add event listeners for the buttons
-        incrementBtn.addEventListener('click', () => {
-            count++;
-            updateDisplay();
-        });
-
-        resetBtn.addEventListener('click', () => {
-            count = 0;
-            updateDisplay();
-        });
-    </script>
+    
 		<aside>
 			<a href="index.html" class="ctext">Integers</a>
 				<br>
