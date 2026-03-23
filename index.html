@@ -84,16 +84,7 @@
 			 float: right;
 			 
 		}
-.quiz-container { max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h2 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .question { margin-bottom: 20px; padding: 15px; border-left: 5px solid #007bff; background: #f9f9f9; }
-        label { display: block; margin: 10px 0; cursor: pointer; padding: 8px; transition: 0.2s; border-radius: 4px; }
-        label:hover { background: #e9ecef; }
-        button { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background: #218838; }
-        #result { margin-top: 20px; font-weight: bold; font-size: 1.1em; }
-        .correct { color: #28a745; }
-        .incorrect { color: #dc3545; }
+
 	</style>
 <link rel="icon" type="image/x-icon" href="favicon.jpg">
 </HEAD>
@@ -182,54 +173,8 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 
 	</li>
 	</ul>
-	<div class="quiz-container">
-    <h2>Mathematics Quiz</h2>
+	
 
-    <div class="question">
-        <p><strong>1.</strong> What is the result of the following addition?</p>
-        <p style="font-size: 1.2em;">\( \frac{3}{5} + \frac{1}{2} \)</p>
-        
-        <label><input type="radio" name="q1" value="wrong"> \( \frac{4}{7} \)</label>
-        <label><input type="radio" name="q1" value="correct"> \( \frac{11}{10} \)</label>
-        <label><input type="radio" name="q1" value="wrong"> \( \frac{4}{10} \)</label>
-        <label><input type="radio" name="q1" value="wrong"> \( 1 \)</label>
-    </div>
-
-    <div class="question">
-        <p><strong>2.</strong> If set \( A = \{2, 4, 6\} \) and set \( B = \{4, 6, 8\} \), what is \( A \cap B \)?</p>
-        
-        <label><input type="radio" name="q2" value="wrong"> \( \{2, 4, 6, 8\} \)</label>
-        <label><input type="radio" name="q2" value="correct"> \( \{4, 6\} \)</label>
-        <label><input type="radio" name="q2" value="wrong"> \( \{2, 8\} \)</label>
-        <label><input type="radio" name="q2" value="wrong"> \( \emptyset \)</label>
-    </div>
-
-    <button onclick="checkAnswers()">Submit Answers</button>
-    <div id="result"></div>
-</div>
-
-<script>
-    function checkAnswers() {
-        let score = 0;
-        const total = 2;
-        const resultsDiv = document.getElementById('result');
-        
-        // Check Q1
-        const q1 = document.querySelector('input[name="q1"]:checked');
-        if (q1 && q1.value === "correct") score++;
-
-        // Check Q2
-        const q2 = document.querySelector('input[name="q2"]:checked');
-        if (q2 && q2.value === "correct") score++;
-
-        // Display Score
-        if (score === total) {
-            resultsDiv.innerHTML = `<span class="correct">Perfect! ${score}/${total} correct.</span>`;
-        } else {
-            resultsDiv.innerHTML = `<span class="incorrect">You got ${score}/${total}. Try again!</span>`;
-        }
-    }
-</script>
 	</p>
 	<hr>
 	<div id="Next">
