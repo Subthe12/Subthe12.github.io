@@ -143,21 +143,28 @@
 		<li class="li">Infinite Set: A set with an uncountable number of elements.</li>
 		<li class="li">Equal Sets: Two sets that contain exactly the same elements.</li>
 		<li class="li">Equivalent Sets: Sets that have the same number of elements, even if the elements are different.</li>
-			<h3>Test Time! (IF YOU LOSE, BABA WILL CATCH AND LICK YOU!!!)</h3>
-	<form id="mathQuiz">
+	<h3>Test Time! (IF YOU LOSE, BABA WILL CATCH AND LICK YOU!!!)</h3>
+<form id="mathQuiz">
   <p>Which of these sets have a cardinal number of 8?</p>
   
-  <input type="radio" id="ans-a" name="quiz-q1" value="-62">
+  <!-- Updated values to match the logic -->
+  <input type="radio" id="ans-a" name="quiz-q1" value="A">
   <label for="ans-a">A = {1,2,3,8,6,5,7}</label><br>
 
-  <input type="radio" id="ans-b" name="quiz-q1" value="62">
+  <input type="radio" id="ans-b" name="quiz-q1" value="B">
   <label for="ans-b">B={x|x = no of states in india - 20}</label><br>
 
-  <input type="radio" id="ans-c" name="quiz-q1" value="72">
+  <input type="radio" id="ans-c" name="quiz-q1" value="C">
   <label for="ans-c">C = {No. of months in an english calander}</label><br>
 
-  <input type="radio" id="ans-d" name="quiz-q1" value="-72">
+  <input type="radio" id="ans-d" name="quiz-q1" value="D">
   <label for="ans-d">None of these</label><br>
+  
+  <br>
+  <button type="button" onclick="checkAnswer()">Submit Answer</button>
+</form>
+
+<p id="resultDisplay"></p>
   
   <br>
   <!-- Use type="button" to prevent the page from refreshing -->
@@ -178,24 +185,25 @@
    </a>
 </div>
 		<script>
-    function checkAnswer() {
-      const selected = document.querySelector('input[name="quiz-q1"]:checked');
-      const display = document.getElementById('resultDisplay');
+function checkAnswer() {
+  const selected = document.querySelector('input[name="quiz-q1"]:checked');
+  const display = document.getElementById('resultDisplay');
 
-      if (!selected) {
-        display.innerText = "Please select an answer!";
-        return;
-      }
+  if (!selected) {
+    display.innerText = "Please select an answer!";
+    return;
+  }
 
-      if (selected.value === "B={x|x = no of states in india - 20}") {
-        display.innerText = "Correct! ✅";
-        display.style.color = "green";
-      } else {
-        display.innerText = "Incorrect. ❌ BABA IS COMMING 😋😋😋";
-        display.style.color = "red";
-      }
-    }
-  </script>
+  // We check if the value is "B" (since 28 states - 20 = 8)
+  if (selected.value === "B") {
+    display.innerText = "Correct! ✅";
+    display.style.color = "green";
+  } else {
+    display.innerText = "Incorrect. ❌ BABA IS COMMING 😋😋😋";
+    display.style.color = "red";
+  }
+}
+</script>
    </BODY>
 </HTML>
 
