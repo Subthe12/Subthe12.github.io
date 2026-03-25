@@ -176,12 +176,54 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 	
 
 	</p>
+	<h3>Test Time!</h3>
+	<form id="mathQuiz">
+  <p>1. What is the sum of -9, 38 and -91?</p>
+  
+  <input type="radio" id="ans-a" name="quiz-q1" value="-62">
+  <label for="ans-a">-62</label><br>
+
+  <input type="radio" id="ans-b" name="quiz-q1" value="62">
+  <label for="ans-b">62</label><br>
+
+  <input type="radio" id="ans-c" name="quiz-q1" value="72">
+  <label for="ans-c">72</label><br>
+
+  <input type="radio" id="ans-d" name="quiz-q1" value="-72">
+  <label for="ans-d">-72</label><br>
+  
+  <br>
+  <!-- Use type="button" to prevent the page from refreshing -->
+  <button type="button" onclick="checkAnswer()">Submit Answer</button>
+</form>
+
+<p id="resultDisplay"></p>
+	
 	<hr>
 	<div id="Next">
    <a href="file1.html" id="button-next">
 	Next
    </a>
 </div>
-	<script src="script.js"></script>
+	<script>
+    function checkAnswer() {
+      const selected = document.querySelector('input[name="quiz-q1"]:checked');
+      const display = document.getElementById('resultDisplay');
+
+      if (!selected) {
+        display.innerText = "Please select an answer!";
+        return;
+      }
+
+      if (selected.value === "-62") {
+        display.innerText = "Correct! ✅";
+        display.style.color = "green";
+      } else {
+        display.innerText = "Incorrect. ❌";
+        display.style.color = "red";
+      }
+    }
+  </script>
+
 </BODY>
 </HTML>
