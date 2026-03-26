@@ -221,6 +221,33 @@
           
         
       </ul>
+		<h3>Test Time! </h3>
+<form id="mathQuiz">
+  <p>Which of these fractions are decimal fraction?</p>
+  
+  <!-- Updated values to match the logic -->
+  <input type="radio" id="ans-a" name="quiz-q1" value="A">
+  <label for="ans-a"><sup>4</sup>&frasl;<sub>100</sub> </label><br>
+
+  <input type="radio" id="ans-b" name="quiz-q1" value="B">
+  <label for="ans-b"><sup>4</sup>&frasl;<sub>8</sub> </label><br>
+
+  <input type="radio" id="ans-c" name="quiz-q1" value="C">
+  <label for="ans-c"><sup>7</sup>&frasl;<sub>285</sub> </label><br>
+
+  <input type="radio" id="ans-d" name="quiz-q1" value="D">
+  <label for="ans-d">None of these</label><br>
+  
+  <br>
+  <button type="button" onclick="checkAnswer()">Submit Answer</button>
+</form>
+
+<p id="resultDisplay"></p>
+  
+  <br>
+  
+
+<p id="resultDisplay"></p>
 		  <hr>
       	 <div id="Next">
    <a href="file3.html" id="button-next">
@@ -230,6 +257,26 @@
    <a href="file1.html" id="button-back">
 	Back
    </a>
+					 <script>
+function checkAnswer() {
+  const selected = document.querySelector('input[name="quiz-q1"]:checked');
+  const display = document.getElementById('resultDisplay');
+
+  if (!selected) {
+    display.innerText = "Please select an answer!";
+    return;
+  }
+
+  // We check if the value is "B" (since 28 states - 20 = 8)
+  if (selected.value === "A") {
+    display.innerText = "Correct! ✅";
+    display.style.color = "green";
+  } else {
+    display.innerText = "Incorrect. ❌";
+    display.style.color = "red";
+  }
+}
+</script>
   </body>
 
 
