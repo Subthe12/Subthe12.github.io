@@ -85,15 +85,24 @@
 			 float: right;
 			 
 		}
- #quiz1 {
-            position:fixed ;
-            top:10px;
-            right:5px;
+		      #quiz1 {
+            width:400px;
+            height:auto;
+            text-align: left;
             background: #ffffff;
-            opacity:0.5;
+            opacity:1;
             padding: 20px;
+            border-radius: 10px;
         }
-
+	      #quiz2 {
+            width:400px;
+            height:auto;
+            text-align: center;
+            background: #ffffff;
+            opacity:1;
+            padding: 20px;
+            border-radius: 10px;
+        }
 	</style>
 <link rel="icon" type="image/x-icon" href="favicon.jpg">
 </HEAD>
@@ -219,6 +228,29 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 	Next
    </a>
 </div>
+	<div id="quiz2">
+	<form id="mathQuiz">
+  <p>Which of these cannot be represented as a negative integer?</p>
+  
+  <input type="radio" id="ans-a" name="quiz-q2" value="-62">
+  <label for="ans-a">The depth of a lake</label><br>
+
+  <input type="radio" id="ans-b" name="quiz-q2" value="62">
+  <label for="ans-b">The temperature of a room</label><br>
+
+  <input type="radio" id="ans-c" name="quiz-q2 " value="72">
+  <label for="ans-c">The number of students in a class</label><br>
+
+  <input type="radio" id="ans-d" name="quiz-q2" value="-72">
+  <label for="ans-d">The amount of money in a bank account</label><br>
+  
+  <br>
+  <!-- Use type="button" to prevent the page from refreshing -->
+  <button type="button" onclick="checkAnswer()">Submit Answer</button>
+</form>
+
+<p id="resultDisplay"></p>
+	</div>
 	<script>
     function checkAnswer() {
       const selected = document.querySelector('input[name="quiz-q1"]:checked');
@@ -230,6 +262,26 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
       }
 
       if (selected.value === "-62") {
+        display.innerText = "Correct! ✅";
+        display.style.color = "green";
+      } else {
+        display.innerText = "Incorrect. ❌";
+        display.style.color = "red";
+      }
+    }
+
+
+
+ function checkAnswer() {
+      const selected = document.querySelector('input[name="quiz-q2"]:checked');
+      const display = document.getElementById('resultDisplay');
+
+      if (!selected) {
+        display.innerText = "Please select an answer!";
+        return;
+      }
+
+      if (selected.value === "The number of students in a class") {
         display.innerText = "Correct! ✅";
         display.style.color = "green";
       } else {
