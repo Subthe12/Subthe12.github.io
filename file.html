@@ -14,7 +14,7 @@
 			background-color:#c5dafc;
 			font-family:serif,sans-serif;
 			font-size: 24px;
-			margin:10px,200px,100px,5px;
+			margin:10px 200px 100px 5px;
 			
 
 		}
@@ -246,7 +246,7 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
   
   <br>
   <!-- Use type="button" to prevent the page from refreshing -->
-  <button type="button" onclick="checkAnswer()">Submit Answer</button>
+  <button type="button" onclick="checkAnswerQ1()">Submit Answer</button>
 </form>
 		
 <div id="quiz2">
@@ -259,7 +259,7 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
   <input type="radio" id="ans-b" name="quiz-q2" value="62">
   <label for="ans-b">The temperature of a room</label><br>
 
-  <input type="radio" id="ans-c" name="quiz-q2 " value="72">
+  <input type="radio" id="ans-c" name="quiz-q2" value="72">
   <label for="ans-c">The number of students in a class</label><br>
 
   <input type="radio" id="ans-d" name="quiz-q2" value="-72">
@@ -267,7 +267,7 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
   
   <br>
   <!-- Use type="button" to prevent the page from refreshing -->
-  <button type="button" onclick="checkAnswer()">Submit Answer</button>
+  <button type="button" onclick="checkAnswerQ2()">Submit Answer</button>
 </form>
 </div>
 	</div>
@@ -292,7 +292,7 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 <p id="resultDisplay"></p>
 	</div>
 	<script>
-    function checkAnswer() {
+    function checkAnswerQ1() {
       const selected = document.querySelector('input[name="quiz-q1"]:checked');
       const display = document.getElementById('resultDisplay');
 
@@ -312,7 +312,7 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 
 
 
- function checkAnswer() {
+ function checkAnswerQ2() {
       const selected = document.querySelector('input[name="quiz-q2"]:checked');
       const display = document.getElementById('resultDisplay');
 
