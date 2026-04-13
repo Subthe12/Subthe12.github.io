@@ -6,27 +6,53 @@
     <style>
       body{
          html{
-          font-size:24px;
+			 scroll-behavior: smooth;
       }
       background-color:#d5dfed;
     }
+		body{
+			font-size: 24px;
+		}
+		hr {
+  border: none;
+  height: 4px;
+  background-color: #333; 
+}
         header {
+		position:relative;
       color: white;
       background-color:#B2AC88;
     border-radius:30px;
+	z-index:1;
     }
-       aside {
-			width: 150px;
-			height:100px;
-			background-color:rgb(250, 245, 232);
-			opacity: 0.6;
-             padding:30px;
-             margin:10px;
-			 border-radius: 20px;
-			 float: right;
-			 
-       }
-      
+    
+      .ctext {
+			text-align: right;
+			 text-decoration: none; 
+	  }
+		main{
+			display:flex;
+			background-color:rgb(255,255,255);
+			border-radius:30px;
+			justify-content:center;
+		}
+		   #car-select {
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 8px;
+      width: 250px;
+    }
+
+    .description-box {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 15px;
+      border: 2px solid #B2AC88;
+      min-height: 50px;
+      width: 400px;
+      display: none; /* Hidden until a car is picked */
+    }
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.jpg">
   </head>
@@ -35,11 +61,68 @@
    <header>
      <h1 align="center">Summary</h1>
    </header>
-     <aside>
-       <a href="index.html" class="ctext">Home | </a><br>
-       <a href="file.html" class="ctext">Mathematics</a><br>
-       <a href="#"class ="ctext">Quiz Page (Not Working)</a><br>
-     </aside>
+     
+	  <main>
+		  <article align="left">
+			  <h2>
+				  Chapters
+			  </h2>
+		<ol>
+			<a herf="" class="ctext">Topographical Sheet</a><br>
+		  <a href="index.html" class="ctext">Atmosphere</a><br>
+		  <a href="index.html" class="ctext">Weather and Clmate</a><br>
+		  <a href="index.html" class="ctext">Weathering and Soil Formation</a>
+		</ol>
+		  </article>
+
+
+
+		  
+		  <article align="right">
+			  <h2>
+				 Quiz
+			  </h2>
+		<ol>
+			<a herf="" class="ctext">None</a><br>
+		  <a href="" class="ctext">None</a><br>
+		  <a href="" class="ctext">None</a><br>
+		  <a href="" class="ctext">None</a>
+		</ol>
+		  </article>
+	  </main>
+	  <div id="ctainer1">
+		  <h1>
+			  Brief Points
+		  </h1>
+		 <select id="car-select" onchange="showText()">
+    <option value="ts">Topographical Sheets</option>
+    <option value="atsp">Atmosphere</option>
+    <option value="wac">Weathering and Soil Formation</option>
+  </select>
+
+  <div id="description" class="description-box"></div>
+	  </div>
+	  <script>
+    function showText() {
+      const selectElement = document.getElementById('car-select');
+      const displayDiv = document.getElementById('description');
+      const selectedValue = selectElement.value;
+
+      // Define the paragraphs for each car
+      const carInfo = {
+        ts: "Topographical sheets (toposheets) are large-scale maps published by national agencies, such as the Survey of India, that depict detailed natural (relief, vegetation, water) and man-made (settlements, roads, railways) features using standard conventional symbols,colors, and contours. They act as essential base maps for area analysis.",
+        atsp: "The atmosphere is a protective, multi-layered blanket of gases surrounding Earth, held by gravity. It consists primarily of nitrogen () and oxygen (), which provide breathable air, regulate temperature, protect against harmful UV radiation, and facilitate the water cycle, creating a habitable environment.",
+        wac: "Weathering is the breakdown of rocks and minerals into smaller particles (regolith) through physical, chemical, and biological processes, serving as the essential first step in soil formation.."
+      };
+
+      if (selectedValue) {
+        displayDiv.innerHTML = "<p>" + carInfo[selectedValue] + "</p>";
+        displayDiv.style.display = "block"; // Make the box visible
+      } else {
+        displayDiv.style.display = "none"; // Hide if nothing is selected
+      }
+    }
+  </script>
   </body>
 </html>
 
