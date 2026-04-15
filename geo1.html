@@ -9,42 +9,36 @@
 
         body {
             background-color: #d5dfed;
-            font-size: 24px;
+            font-size: 20px; /* Adjusted slightly for better balance */
             font-family: sans-serif;
             margin: 20px;
-        }
-
-        hr {
-            border: none;
-            height: 4px;
-            background-color: #333;
+            line-height: 1.6;
         }
 
         header {
-            position: relative;
             color: white;
             background-color: #B2AC88;
             border-radius: 30px;
             padding: 10px;
-            z-index: 1;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         main {
             display: flex;
             background-color: rgb(255, 255, 255);
             border-radius: 30px;
-            justify-content: space-around; /* Distributes the two boxes evenly */
+            justify-content: space-around; 
             padding: 20px;
             gap: 20px;
+            margin-bottom: 30px;
         }
 
-        /* Fixed selectors: added # for IDs */
         #a1, #a2 {
             background-color: #fae5d2;
             padding: 20px;
             border-radius: 20px;
-            flex: 1; /* Makes both boxes equal width */
+            flex: 1; 
         }
 
         .ctext {
@@ -58,16 +52,19 @@
             text-decoration: underline;
         }
 
-       }
-
-     
-display: none;
+        .dt {
+            font-weight: bold;
+            font-family: "Times New Roman", serif;
+            background-color: #ffffff;
+            font-size: 28px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 20px;
         }
-        .dt{
-            font-weight:bold;
-            font-family:"Times New Roman","Verdana",sans-serif;
-            background-color:rgb(255,255,255);
-            font-size:30px;
+
+        dd {
+            margin: 10px 0 20px 20px;
         }
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.jpg">
@@ -76,65 +73,57 @@ display: none;
 <body>
 
     <header>
-        <h1 align="center">Summary</h1>
+        <h1>Geography Summary</h1>
     </header>
 
     <main>
         <article id="a1">
             <h2>Chapters</h2>
-            <a href="#" class="ctext">Topographical Sheet</a><br>
-            <a href="index.html" class="ctext">Atmosphere</a><br>
-            <a href="index.html" class="ctext">Weather and Climate</a><br>
-            <a href="index.html" class="ctext">Weathering and Soil Formation</a>
+            <a href="#topographic" class="ctext">Topographical Sheet</a><br>
+            <a href="#atmosphere" class="ctext">Atmosphere</a><br>
+            <a href="#weather" class="ctext">Weather and Climate</a><br>
+            <a href="#weathering" class="ctext">Weathering and Soil Formation</a>
         </article>
 
         <article id="a2">
             <h2>Quiz</h2>
-            <a href="#" class="ctext">None Available</a><br>
-            <a href="#" class="ctext">None Available</a><br>
-            <a href="#" class="ctext">None Available</a><br>
-            <a href="#" class="ctext">None Available</a>
+            <a href="#" class="ctext">Coming Soon</a><br>
+            <a href="#" class="ctext">Coming Soon</a><br>
+            <a href="#" class="ctext">Coming Soon</a><br>
+            <a href="#" class="ctext">Coming Soon</a>
         </article>
     </main>
-<h1 aligh="left">
-    Brief Points
-</h1>
-<dl>
-      <dt class="dt">
-        topographical Sheet
-    </dt>
-<dd>
-    A toposheet (topographical sheet) is a detailed, large-scale map that provides a precise, 
-    two-dimensional representation of a three-dimensional landscape.
-    It acts as a comprehensive record of both natural features (such as rivers, forests, and hills) and man-made, or cultural, 
-    features (such as settlements, roads, and railways).
-</dd>   
-       <dt class="dt">
-        Atmosphere
-    </dt>
-    <dd>
-        The atmosphere is a dynamic, multi-layered blanket of gases—mainly 78% nitrogen and 21% oxygen—surrounding Earth, 
-        protecting it from solar radiation, meteors, and extreme temperatures. It sustains life by supplying oxygen, 
-        creating weather, and trapping heat to regulate climate, functioning as a vital buffer between the surface and outer space.
-    </dd>
-    <dt class="dt">
-        Weather and Climate
-    </dt>
-    <dd>
-        Weather refers to the short-term, day-to-day atmospheric conditions (like rain, temperature, or wind) 
-        in a specific place, changing in minutes or weeks. Climate is the long-term average of these weather
-        patterns over 30 years or more, defining what to expect in a region. Simply, weather is what you get; 
-        climate is what you expect.
-    </dd>
-       <dt class="dt">
-        Weathering and Soil Formatiion
-    </dt>
-    <dd>
-        eathering is the breakdown of rocks and minerals into smaller particles through physical, chemical, or biological processes, acting as the foundation for soil formation. This long-term process combines broken-down parent material with organic matter, water, and air, developing into soil horizons over time under the influence of climate and vegetation.
-    </dd>
-</dl>
-  
 
-   
+    <h2 style="padding-left: 10px;">Brief Points</h2>
+
+    <dl>
+        <dt class="dt" id="topographic">Topographical Sheet</dt>
+        <dd>
+            A toposheet (topographical sheet) is a detailed, large-scale map that provides a precise, 
+            two-dimensional representation of a three-dimensional landscape. It acts as a comprehensive record 
+            of both natural features (rivers, forests, hills) and man-made features (settlements, roads, railways).
+        </dd>   
+
+        <dt class="dt" id="atmosphere">Atmosphere</dt>
+        <dd>
+            The atmosphere is a dynamic, multi-layered blanket of gases—mainly 78% nitrogen and 21% oxygen—surrounding Earth. 
+            It protects the planet from solar radiation and extreme temperatures while sustaining life by supplying oxygen 
+            and creating weather.
+        </dd>
+
+        <dt class="dt" id="weather">Weather and Climate</dt>
+        <dd>
+            Weather refers to short-term, day-to-day atmospheric conditions (rain, temperature, wind). 
+            Climate is the long-term average of these patterns over 30 years or more. 
+            <strong>Simply:</strong> weather is what you get; climate is what you expect.
+        </dd>
+
+        <dt class="dt" id="weathering">Weathering and Soil Formation</dt>
+        <dd>
+            Weathering is the breakdown of rocks into smaller particles through physical, chemical, or biological processes. 
+            This acts as the foundation for soil formation, combining minerals with organic matter, water, and air over time.
+        </dd>
+    </dl>
+
 </body>
 </html>
