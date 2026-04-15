@@ -58,28 +58,10 @@
             text-decoration: underline;
         }
 
-        #ctainer1 {
-            margin-top: 30px;
-            padding: 20px;
-        }
+       }
 
-        #car-select {
-            padding: 10px;
-            font-size: 18px;
-            border-radius: 8px;
-            width: 300px;
-        }
-
-        .description-box {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 15px;
-            border: 2px solid #B2AC88;
-            min-height: 50px;
-            width: 90%; /* Responsive width */
-            max-width: 600px;
-            display: none;
+     
+display: none;
         }
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.jpg">
@@ -108,40 +90,45 @@
             <a href="#" class="ctext">None Available</a>
         </article>
     </main>
+<h1 aligh="left">
+    Brief Points
+</h1>
+<dl>
+    <dt>
+        topographical Sheet
+    </dt>
+<dd>
+    A toposheet (topographical sheet) is a detailed, large-scale map that provides a precise, 
+    two-dimensional representation of a three-dimensional landscape.
+    It acts as a comprehensive record of both natural features (such as rivers, forests, and hills) and man-made, or cultural, 
+    features (such as settlements, roads, and railways).
+</dd>   
+    <dt>
+        Atmosphere
+    </dt>
+    <dd>
+        The atmosphere is a dynamic, multi-layered blanket of gases—mainly 78% nitrogen and 21% oxygen—surrounding Earth, 
+        protecting it from solar radiation, meteors, and extreme temperatures. It sustains life by supplying oxygen, 
+        creating weather, and trapping heat to regulate climate, functioning as a vital buffer between the surface and outer space.
+    </dd>
+    <dt>
+        Weather and Climate
+    </dt>
+    <dd>
+        Weather refers to the short-term, day-to-day atmospheric conditions (like rain, temperature, or wind) 
+        in a specific place, changing in minutes or weeks. Climate is the long-term average of these weather
+        patterns over 30 years or more, defining what to expect in a region. Simply, weather is what you get; 
+        climate is what you expect.
+    </dd>
+    <dt>
+        Weathering and Soil Formatiion
+    </dt>
+    <dd>
+        eathering is the breakdown of rocks and minerals into smaller particles through physical, chemical, or biological processes, acting as the foundation for soil formation. This long-term process combines broken-down parent material with organic matter, water, and air, developing into soil horizons over time under the influence of climate and vegetation.
+    </dd>
+</dl>
+  
 
-    <div id="ctainer1">
-        <h1>Brief Points</h1>
-        <select id="car-select" onchange="showText()">
-            <option value="">-- Select a Topic --</option>
-            <option value="ts">Topographical Sheets</option>
-            <option value="atsp">Atmosphere</option>
-            <option value="wc">Weather and Climate</option>
-            <option value="wac">Weathering and Soil Formation</option>
-        </select>
-
-        <div id="description" class="description-box"></div>
-    </div>
-
-    <script>
-        function showText() {
-            const selectElement = document.getElementById('car-select');
-            const displayDiv = document.getElementById('description');
-            const selectedValue = selectElement.value;
-
-            const topicsInfo = {
-                ts: "Topographical sheets (toposheets) are large-scale maps published by national agencies that depict detailed natural (relief, vegetation, water) and man-made (settlements, roads) features using standard symbols and contours.",
-                atsp: "The atmosphere is a multi-layered blanket of gases surrounding Earth. It consists primarily of nitrogen (78%) and oxygen (21%), which regulate temperature and protect us from UV radiation.",
-                wc: "Weather refers to short-term atmospheric conditions (like a rainy day), while Climate refers to the average weather patterns of a specific region over a long period of time (usually 30+ years).",
-                wac: "Weathering is the breakdown of rocks into smaller particles through physical, chemical, and biological processes, which is the first step in creating soil."
-            };
-
-            if (selectedValue && topicsInfo[selectedValue]) {
-                displayDiv.innerHTML = "<p>" + topicsInfo[selectedValue] + "</p>";
-                displayDiv.style.display = "block";
-            } else {
-                displayDiv.style.display = "none";
-            }
-        }
-    </script>
+   
 </body>
 </html>
