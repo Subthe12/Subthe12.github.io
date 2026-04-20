@@ -327,7 +327,10 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 
 
 
- function checkAnswerQ2() {
+
+
+
+		    function checkAnswerQ2() {
       const selected = document.querySelector('input[name="quiz-q2"]:checked');
       const display = document.getElementById('resultDisplay');
 
@@ -336,11 +339,12 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
         return;
       }
 
-      if (selected.value === "The number of students in a class") {
-        display.innerText = "Correct! ✅";
+      // Updated logic to match the radio button value
+      if (selected.nextElementSibling.innerText === "The number of students in a class") {
+        display.innerText = "Correct! ✅ You can't have half or negative students.";
         display.style.color = "green";
       } else {
-        display.innerText = "Incorrect. ❌";
+        display.innerText = "Incorrect. ❌ Think about what can never be less than zero.";
         display.style.color = "red";
       }
     }
