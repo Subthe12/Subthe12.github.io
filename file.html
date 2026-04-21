@@ -237,57 +237,92 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 
 	</li>
 	</ul>
-	
-<div id="ctainer2">
-	</p>
-	<h2 ALIGN="center">Test Time! </h2>
+	<div id="ctainer2">
+    <h2 align="center">Test Time!</h2>
+
+    <!-- Question 1 Container -->
     <div id="quiz1">
-	<form id="mathQuiz">
-  <p>1. What is the sum of -9, 38 and -91?</p>
-  
-  <input type="radio" id="ans-a" name="quiz-q1" value="-62">
-  <label for="ans-a">-62</label><br>
+        <form id="mathQuiz1">
+            <p>1. What is the sum of -9, 38 and -91?</p>
+            <input type="radio" id="q1a" name="quiz-q1" value="-62"> <label for="q1a">-62</label><br>
+            <input type="radio" id="q1b" name="quiz-q1" value="62"> <label for="q1b">62</label><br>
+            <input type="radio" id="q1c" name="quiz-q1" value="72"> <label for="q1c">72</label><br>
+            <input type="radio" id="q1d" name="quiz-q1" value="-72"> <label for="q1d">-72</label><br>
+            <br>
+            <button type="button" onclick="checkAnswerQ1()">Submit Answer</button>
+            <button type="button" id="nextBtn" style="display:none;" onclick="showNextQuestion()">Next Question ➡️</button>
+        </form>
+    </div>
 
-  <input type="radio" id="ans-b" name="quiz-q1" value="62">
-  <label for="ans-b">62</label><br>
+    <!-- Question 2 Container (Hidden by default) -->
+    <div id="quiz2" style="display:none;">
+        <form id="mathQuiz2">
+            <p>2. Which of these cannot be represented as a negative integer?</p>
+            <input type="radio" id="q2a" name="quiz-q2"> <label for="q2a">The depth of a lake</label><br>
+            <input type="radio" id="q2b" name="quiz-q2"> <label for="q2b">The temperature of a room</label><br>
+            <input type="radio" id="q2c" name="quiz-q2"> <label for="q2c">The number of students in a class</label><br>
+            <input type="radio" id="q2d" name="quiz-q2"> <label for="q2d">The amount of money in a bank account</label><br>
+            <br>
+            <button type="button" onclick="checkAnswerQ2()">Submit Answer</button>
+        </form>
+    </div>
 
-  <input type="radio" id="ans-c" name="quiz-q1" value="72">
-  <label for="ans-c">72</label><br>
-
-  <input type="radio" id="ans-d" name="quiz-q1" value="-72">
-  <label for="ans-d">-72</label><br>
-  
-  <br>
-  <!-- Use type="button" to prevent the page from refreshing -->
-  <button type="button" onclick="checkAnswerQ1()">Submit Answer</button>
-</form>
-		</div>
-<div id="quiz2">
-	<form id="mathQuiz">
-  <p>Which of these cannot be represented as a negative integer?</p>
-  
-  <input type="radio" id="ans-a" name="quiz-q2" value="-62">
-  <label for="ans-a">The depth of a lake</label><br>
-
-  <input type="radio" id="ans-b" name="quiz-q2" value="62">
-  <label for="ans-b">The temperature of a room</label><br>
-
-  <input type="radio" id="ans-c" name="quiz-q2" value="72">
-  <label for="ans-c">The number of students in a class</label><br>
-
-  <input type="radio" id="ans-d" name="quiz-q2" value="-72">
-  <label for="ans-d">The amount of money in a bank account</label><br>
-  
-  <br>
-  <!-- Use type="button" to prevent the page from refreshing -->
-  <button type="button" onclick="checkAnswerQ2()">Submit Answer</button>
-</form>
+    <p id="resultDisplay"></p>
 </div>
-	
-</div>
-<p id="resultDisplay"></p>
-	</div>
-	<hr>
+
+<script>
+    function checkAnswerQ1() {
+        const selected = document.querySelector('input[name="quiz-q1"]:checked');
+        const display = document.getElementById('resultDisplay');
+        const nextBtn = document.getElementById('nextBtn');
+
+        if (!selected) {
+            display.innerText = "Please select an answer!";
+            return;
+        }
+
+        if (selected.value === "-62") {
+            display.innerText = "Correct! ✅";
+            display.style.color = "green";
+            nextBtn.style.display = "inline-block"; // Show the Next button
+        } else {
+            display.innerText = "Incorrect. ❌";
+            display.style.color = "red";
+            nextBtn.style.display = "none";
+        }
+    }
+
+    function showNextQuestion() {
+        document.getElementById('quiz1').style.display = "none";
+        document.getElementById('quiz2').style.display = "block";
+        document.getElementById('resultDisplay').innerText = ""; // Clear the "Correct" message
+    }
+
+    function checkAnswerQ2() {
+        const selected = document.querySelector('input[name="quiz-q2"]:checked');
+        const display = document.getElementById('resultDisplay');
+
+        if (!selected) {
+            display.innerText = "Please select an answer!";
+            return;
+        }
+
+        if (selected.nextElementSibling.innerText === "The number of students in a class") {
+            display.innerText = "Correct! ✅ You can't have half or negative students.";
+            display.style.color = "green";
+        } else {
+            display.innerText = "Incorrect. ❌ Think about what can never be less than zero.";
+            display.style.color = "red";
+        }
+    }
+</script>
+
+
+
+
+
+
+
 	
 	<div id="ctainer1">
 			<div id="Back">
@@ -300,55 +335,7 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
 	Next
    </a>
 </div>
-
 	</div>
-	
-
-<p id="resultDisplay"></p>
-	</div>
-	<script>
-    function checkAnswerQ1() {
-      const selected = document.querySelector('input[name="quiz-q1"]:checked');
-      const display = document.getElementById('resultDisplay');
-
-      if (!selected) {
-        display.innerText = "Please select an answer!";
-        return;
-      }
-
-      if (selected.value === "-62") {
-        display.innerText = "Correct! ✅";
-        display.style.color = "green";
-      } else {
-        display.innerText = "Incorrect. ❌";
-        display.style.color = "red";
-      }
-    }
-
-
-
-
-
-
-		    function checkAnswerQ2() {
-      const selected = document.querySelector('input[name="quiz-q2"]:checked');
-      const display = document.getElementById('resultDisplay');
-
-      if (!selected) {
-        display.innerText = "Please select an answer!";
-        return;
-      }
-
-      // Updated logic to match the radio button value
-      if (selected.nextElementSibling.innerText === "The number of students in a class") {
-        display.innerText = "Correct! ✅ You can't have half or negative students.";
-        display.style.color = "green";
-      } else {
-        display.innerText = "Incorrect. ❌ Think about what can never be less than zero.";
-        display.style.color = "red";
-      }
-    }
-  </script>
 
 </BODY>
 </HTML>
