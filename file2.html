@@ -92,6 +92,11 @@
 			 float: right;
 			 
 		}
+	  .c {
+				display:flex;
+				gap:800px;
+				justify-content:left;
+			}
 	
   </style>
 	<link rel="icon" type="image/x-icon" href="favicon.jpg">
@@ -249,6 +254,7 @@
 
 <p id="resultDisplay"></p>
 		  <hr>
+	<div class="c">
       	 <div id="Next">
    <a href="file3.html" id="button-next">
 	Next
@@ -257,6 +263,7 @@
    <a href="file1.html" id="button-back">
 	Back
    </a>
+				 </div>
 					 <script>
 function checkAnswer() {
   const selected = document.querySelector('input[name="quiz-q1"]:checked');
