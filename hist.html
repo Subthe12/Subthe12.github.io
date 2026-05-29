@@ -1,25 +1,16 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-  <head>
-    	<meta charset="UTF-8">
-    <title>
-   Weather And Climate
-    </title>
-    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+<head>
+    <title>Geography Main Page</title>
     <style>
-    html {
+        html {
             scroll-behavior: smooth;
         }
-	hr {
- 	 border: none;
-  	height: 4px;
- 	 background-color: #333; 
-	}
 
         body {
             background-color: #d5dfed;
             font-size: 20px; /* Adjusted slightly for better balance */
-            font-family: sans-serif;
+        	 font-family: "Courier New", Courier, monospace;
             margin: 20px;
             line-height: 1.6;
         }
@@ -32,72 +23,103 @@
             margin-bottom: 20px;
             text-align: center;
         }
-          main {
+
+        main {
             display: flex;
             background-color: rgb(255, 255, 255);
             border-radius: 30px;
             justify-content: space-around; 
-            padding: 30px;
+            padding: 20px;
             gap: 20px;
             margin-bottom: 30px;
         }
-      .a{
-        background-color:rgb(230,230,230);
-	border-radius:30px;
-        padding:30px;
-        margin:20px;
-      }
-		.li:hover{
-			color:#84a8e0;
-			font-size:30px;
-			transition:10s ease;
-		}
-	
+
+        #a1, #a2 {
+            background-color: #fae5d2;
+            padding: 20px;
+            border-radius: 20px;
+            flex: 1; 
+        }
+
+        .ctext {
+            text-decoration: none;
+            color: #2c3e50;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .ctext:hover {
+            text-decoration: underline;
+        }
+
+        .dt {
+            font-weight: bold;
+            font-family: "Times New Roman", serif;
+            background-color: #ffffff;
+            font-size: 28px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        dd {
+            margin: 10px 0 20px 20px;
+        }
     </style>
-  </head>
-  <BODY>
+    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+</head>
+
+<body>
+
     <header>
         <h1>Geography Summary</h1>
     </header>
-    <main>
-      <article class="a">
-        <h1>
-          Definition of Weather and Climate
-        </h1>
-        <p>
-        <br>
-         Weather is defined as the state of the atmosphere over a short period of time. It can change over the time. In simple terms it refer
-			s to the day-to-day conditions of the atmosphere of a definite place and time.<br>
-			Climate refers to the atmospheric conditions over a long period of time. It can be defined as the average weather conditions prevailing
-			at a place and recorded over a long time.The time perion varies from 30-35years.
-          <h2>Elements of Weather and Climate </h2>
-    		The elements that determine the weather and climate are:
-			<ol>
-				<li class="li">
-				Temperature
-				</li>
-				<li class="li">
-					Atmospheric Pressure
-				</li>
-				<li class="li">
-					Wind
-				</li>
-				<li class="li">
-						Humidity
-				</li>
-				<li class="li">
-					Cloudliness
-				</li>
-				<li class="li">
-					Precipitation
-				</li>
-			</ol>
-		  <h1>
-			  
-		  </h1>
-        </p>
-      </article>
 
+    <main>
+        <article id="a1">
+            <h2>Chapters</h2>
+            <a href="hist1.html" class="ctext">Start of Humans</a><br>
+            <a href="hist2.html" class="ctext">Evolution</a><br>
+            <a href="hist3.html" class="ctext">Periods of Evolution</a><br>
+            <a href="hist4.html" class="ctext"></a><br>
+            <a href="Ozone.html" class="ctext">Ozone Depletion</a><br>
+        </article>
+
+        <article id="a2">
+            <h2>Quiz</h2>
+            <a href="Happy potato.jpg" class="ctext">Coming Soon</a><br>
+            <a href="triz.html" class="ctext">Coming Soon</a><br>
+            <a href="Happy potato.jpg" class="ctext">Coming Soon</a><br>
+            <a href="Happy potato.jpg" class="ctext">Coming Soon</a>
+        </article>
     </main>
-  </BODY>
+
+    <h2 style="padding-left: 10px;">Brief Points</h2>
+
+    <dl>
+        <dt class="dt" id="topographic">Start OF Humans</dt>
+        <dd> Humans evolved over millions of years through a continuous process of biological evolution. 
+			We share a common ancestor with modern African apes, 
+			and we developed key survival traits like walking upright, larger brains, and tool utilisation. </dd>   
+
+        <dt class="dt" id="atmosphere">Evolution</dt>
+        <dd>
+           Evolution means a biological development over time. We humans, evolved from apes to 
+			hominids to <i>Homo habilis</i> to <i>Homo erectus</i> to <i>Homo sapiens</i>(Humans)
+        </dd>
+
+        <dt class="dt" id="weather">Periods of Evolution</dt>
+        <dd>
+           The early days of humans were divided into three major periods: the Stone Age, Bronze Age, and Iron Age.
+        </dd>
+
+        <dt class="dt" id="weathering">████████████</dt>
+        <dd>
+          ████████████████████████ is the ██████ into ███████████████ ████████████  through  ████████████  , ████████████ ,  ████████████   or  ████████████   ████████████  . 
+            This acts as the  ████████████   ████████████    ████████████   with  ████████████   ████████████   over time.
+        </dd>
+    </dl>
+
+</body>
 </html>
