@@ -62,16 +62,15 @@
     <main>
       <article class="a">
         <h1>
-         ███████████████
+         Introduction
         </h1>
         <p>
         <br>
-         ██████ is█████████ ███ of the ██████ over a short ██████ of time. It ██████. In simple terms █████████████████████  █████████  ███
-			  ██████ ███, ██████ ████████████  ███  time.<br>
-			██████ refers to ████████████ ██████ ██████ ███ ███ long period of time. It can be ██████  ██████  
-			███ ███  ██████, ██████.The time period ███ from ██████.
+         Millions of years ago, our Earth had a very different environment. Great apes ruled the world at that time. Slowly, the apes evolved into <i>hominids</i>. Then
+			these <i>hominids</i> evolved into <i>homo habilis</i>, into <i>homo erectus</i> into <i>homo sapiens</i>. 
           <h2>██████████████████ </h2>
-    		The ██████the ███er and ███ are:
+    	Early humans roamed from one place to another in search of food and shelter. Some lived in trees, and trees sheltered them from wild animals.
+			Some also lived in caves. It provided more protection to heat anc cold, but offered less protection to wild animals.
 			
 		  <h1>
 			  
@@ -80,5 +79,19 @@
       </article>
 
     </main>
+	  <!-- Removed 'controls' so the player is completely invisible -->
+	<audio id="bg-music" loop>
+ 		<source src="The Dread.ogg" type="audio/ogg">
+ 		Your browser does not support the audio element.
+	</audio>
+
+	<script>
+		// Waits for the user to click anywhere on the page, then starts the music
+		document.addEventListener('click', function() {
+			var audio = document.getElementById('bg-music');
+			audio.play();
+		}, { once: true }); // '{ once: true }' ensures this code only runs on the very first click
+	</script>
+
   </BODY>
 </html>
