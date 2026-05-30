@@ -337,19 +337,18 @@ and  		a – (-b) = a + additive inverse of (-b) = a + b
    </a>
 </div>
 	</div>
-<!-- Removed 'controls' so the player is completely invisible -->
-	<audio id="bg-music" loop>
+<html>
+<head>
+</head>
+<body>
+	<!-- Added 'controls' so you can see the play button -->
+	<audio autoplay loop controls>
  		<source src="The Dread.ogg" type="audio/ogg">
  		Your browser does not support the audio element.
 	</audio>
+</body>
+</html>
 
-	<script>
-		// Waits for the user to click anywhere on the page, then starts the music
-		document.addEventListener('click', function() {
-			var audio = document.getElementById('bg-music');
-			audio.play();
-		}, { once: true }); // '{ once: true }' ensures this code only runs on the very first click
-	</script>
 
 </BODY>
 </HTML>
