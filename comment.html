@@ -51,23 +51,15 @@
     .comment-item {
       border-bottom: 1px solid #eee;
       padding: 15px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
     }
     .comment-item:last-child {
       border-bottom: none;
-    }
-    .comment-content {
-      flex-grow: 1;
-      padding-right: 15px;
     }
     .comment-name {
       font-weight: bold;
       color: #060b14;
       margin-bottom: 3px;
     }
-    /* New timestamp styling */
     .comment-time {
       font-size: 12px;
       color: #888;
@@ -76,19 +68,6 @@
     .comment-text {
       color: #555;
       margin: 0;
-    }
-    /* New delete button styling */
-    .delete-btn {
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-    .delete-btn:hover {
-      background-color: #cc0000;
     }
   </style>
 </head>
@@ -110,81 +89,79 @@
   </div>
 
   <div class="comments-display-box">
-    <h2>All Comments</h2>
+    <h2>All Global Comments</h2>
     <div id="commentsList"></div>
   </div>
 
+  <!-- Include Compatible Firebase Scripts -->
+  <script src="https://gstatic.com"></script>
+  <script src="https://gstatic.com"></script>
+
   <script>
+    // Configured precisely with your sub-comment credentials
+    const firebaseConfig = {
+      apiKey: "AIzaSyAV13oZmai424v3aQ5JIcp4IAjfLN4OoBo",
+      authDomain: "sub-comment.firebaseapp.com",
+      databaseURL: "https://firebaseio.com", // Points to your Realtime Database region
+      projectId: "sub-comment",
+      storageBucket: "sub-comment.firebasestorage.app",
+      messagingSenderId: "460765119345",
+      appId: "1:460765119345:web:0ab9154bde74709f41acd0"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
     const commentForm = document.getElementById('commentForm');
     const commentsList = document.getElementById('commentsList');
 
-    // Function to load and display saved comments with timestamps and delete actions
-    function displayComments() {
+    // Live reader from your cloud database
+    database.ref('comments').on('value', (snapshot) => {
       commentsList.innerHTML = '';
-      const savedComments = JSON.parse(localStorage.getItem('myWebComments')) || [];
+      const data = snapshot.val();
       
-      if (savedComments.length === 0) {
-        commentsList.innerHTML = '<p style="color: #888;">No comments yet. Be the first!</p>';
+      if (!data) {
+        commentsList.innerHTML = '<p style="color: #888;">No comments yet. Be the first to leave one global note!</p>';
         return;
       }
 
-      savedComments.forEach((comment, index) => {
+      Object.values(data).forEach(comment => {
         const item = document.createElement('div');
         item.className = 'comment-item';
         item.innerHTML = `
-          <div class="comment-content">
-            <div class="comment-name">${escapeHTML(comment.name)}</div>
-            <div class="comment-time">${comment.time || 'Unknown date'}</div>
-            <p class="comment-text">${escapeHTML(comment.message)}</p>
-          </div>
-          <button class="delete-btn" onclick="deleteComment(${index})">Delete</button>
+          <div class="comment-name">${escapeHTML(comment.name)}</div>
+          <div class="comment-time">${comment.time}</div>
+          <p class="comment-text">${escapeHTML(comment.message)}</p>
         `;
         commentsList.appendChild(item);
       });
-    }
+    });
 
-    // Function to handle form submission
+    // Pushes your input entries up into the global Firebase cloud storage bucket
     commentForm.addEventListener('submit', function(event) {
       event.preventDefault(); 
 
       const nameInput = document.getElementById('name');
       const msgInput = document.getElementById('msg');
-
-      // Creates a clean readable date format (e.g., "08/06/2026, 11:08 AM")
       const currentDateTime = new Date().toLocaleString();
 
-      const newComment = {
+      database.ref('comments').push({
         name: nameInput.value,
         message: msgInput.value,
         time: currentDateTime
-      };
-
-      const savedComments = JSON.parse(localStorage.getItem('myWebComments')) || [];
-      savedComments.push(newComment);
-      localStorage.setItem('myWebComments', JSON.stringify(savedComments));
+      });
 
       nameInput.value = '';
       msgInput.value = '';
-      displayComments();
     });
-
-    // New function to handle comment deletion by its list placement index
-    function deleteComment(index) {
-      const savedComments = JSON.parse(localStorage.getItem('myWebComments')) || [];
-      savedComments.splice(index, 1); // Remove the chosen item from array
-      localStorage.setItem('myWebComments', JSON.stringify(savedComments));
-      displayComments(); // Refresh UI layout
-    }
 
     function escapeHTML(str) {
       return str.replace(/[&<>'"]/g, 
         tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
       );
     }
-
-    displayComments();
   </script>
 
 </body>
 </html>
-
