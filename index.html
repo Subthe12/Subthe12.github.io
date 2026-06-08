@@ -38,12 +38,15 @@
           gap:40px;
           justify-content: center;
       }
-      footer {
+  footer {
           background-color:#060b14;
           color:white;
-          length:100%;
-          width:500px;
-        
+          width:100%; /* Fixed from length:100% and removed width:500px */
+          padding: 20px 0; /* Adds spacing inside the footer */
+          text-align: center; /* Centers your comment link */
+      }
+      footer a {
+          color: white; /* Ensures the link text is readable on the dark background */
       }
   </style>
 </head>
