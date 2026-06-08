@@ -1,168 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Comments</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #d5dfed;
-      padding: 40px;
-    }
-    .comment-box {
-      background: white;
-      max-width: 600px;
-      margin: 0 auto 30px auto;
-      padding: 30px;
-      border-radius: 20px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0 20px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-    button {
-      background-color: #B2AC88;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #999373;
-    }
-    .back-link {
-      display: inline-block;
-      margin-top: 20px;
-      color: #060b14;
-    }
-    .comments-display-box {
-      background: white;
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 30px;
-      border-radius: 20px;
-    }
-    .comment-item {
-      border-bottom: 1px solid #eee;
-      padding: 15px 0;
-    }
-    .comment-item:last-child {
-      border-bottom: none;
-    }
-    .comment-name {
-      font-weight: bold;
-      color: #060b14;
-      margin-bottom: 3px;
-    }
-    .comment-time {
-      font-size: 12px;
-      color: #888;
-      margin-bottom: 8px;
-    }
-    .comment-text {
-      color: #555;
-      margin: 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comments</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #d5dfed;
+    padding: 40px;
+    margin: 0;
+  }
+
+  .comment-box,
+  .comments-display-box {
+    background: white;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+
+  h2 {
+    margin-top: 0;
+    color: #060b14;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+
+  button {
+    background-color: #B2AC88;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: #999373;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #060b14;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  .comment-item {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+  }
+
+  .comment-item:last-child {
+    border-bottom: none;
+  }
+
+  .comment-name {
+    font-weight: bold;
+    color: #060b14;
+    margin-bottom: 3px;
+  }
+
+  .comment-time {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 8px;
+  }
+
+  .comment-text {
+    color: #555;
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .empty-message {
+    color: #888;
+  }
+</style>
 </head>
 <body>
 
-  <div class="comment-box">
-    <h2>Leave a Comment</h2>
-    <form id="commentForm">
-      <label for="name">Name:</label>
-      <input type="text" id="name" required placeholder="Your name...">
+<div class="comment-box">
+  <h2>Leave a Comment</h2>
 
-      <label for="msg">Message:</label>
-      <textarea id="msg" rows="5" required placeholder="Type your comment here..."></textarea>
+  <form id="commentForm">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      maxlength="50"
+      required
+      placeholder="Your name..."
+    >
 
-      <button type="submit">Post Comment</button>
-    </form>
-    
-    <a class="back-link" href="index.html">← Back to Summary</a>
+    <label for="msg">Message:</label>
+    <textarea
+      id="msg"
+      rows="5"
+      maxlength="1000"
+      required
+      placeholder="Type your comment here..."
+    ></textarea>
+
+    <button type="submit">Post Comment</button>
+  </form>
+
+  <a class="back-link" href="index.html">← Back to Summary</a>
+</div>
+
+<div class="comments-display-box">
+  <h2>All Global Comments</h2>
+  <div id="commentsList">
+    <p class="empty-message">Loading comments...</p>
   </div>
+</div>
 
-  <div class="comments-display-box">
-    <h2>All Global Comments</h2>
-    <div id="commentsList"></div>
-  </div>
+<!-- Firebase v8 SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-  <!-- FIXED: Replaced empty gstatic URLs with real Firebase scripts -->
-  <script src="https://gstatic.com"></script>
-  <script src="https://gstatic.com"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAV13oZmai424v3aQ5JIcp4IAjfLN4OoBo",
+    authDomain: "sub-comment.firebaseapp.com",
+    databaseURL: "https://sub-comment-default-rtdb.firebaseio.com",
+    projectId: "sub-comment",
+    storageBucket: "sub-comment.firebasestorage.app",
+    messagingSenderId: "460765119345",
+    appId: "1:460765119345:web:0ab9154bde74709f41acd0"
+  };
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAV13oZmai424v3aQ5JIcp4IAjfLN4OoBo",
-      authDomain: "sub-comment.firebaseapp.com",
-      databaseURL: "https://sub-comment-default-rtdb.firebaseio.com",
-      projectId: "sub-comment",
-      storageBucket: "sub-comment.firebasestorage.app",
-      messagingSenderId: "460765119345",
-      appId: "1:460765119345:web:0ab9154bde74709f41acd0"
-    };
+  firebase.initializeApp(firebaseConfig);
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+  const database = firebase.database();
 
-    const commentForm = document.getElementById('commentForm');
-    const commentsList = document.getElementById('commentsList');
+  const commentForm = document.getElementById("commentForm");
+  const commentsList = document.getElementById("commentsList");
 
-    // Live reader from your cloud database
-    database.ref('comments').on('value', (snapshot) => {
-      commentsList.innerHTML = '';
-      const data = snapshot.val();
-      
-      if (!data) {
-        commentsList.innerHTML = '<p style="color: #888;">No comments yet. Be the first to leave one global note!</p>';
-        return;
-      }
+  function escapeHTML(str) {
+    if (!str) return "";
 
-      Object.values(data).forEach(comment => {
-        const item = document.createElement('div');
-        item.className = 'comment-item';
-        item.innerHTML = `
-          <div class="comment-name">${escapeHTML(comment.name)}</div>
-          <div class="comment-time">${comment.time || ''}</div>
-          <p class="comment-text">${escapeHTML(comment.message)}</p>
-        `;
-        commentsList.appendChild(item);
-      });
+    return str.replace(/[&<>"']/g, function(tag) {
+      const chars = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      };
+
+      return chars[tag] || tag;
     });
+  }
 
-    // Pushes your input entries up into the global Firebase cloud storage bucket
-    commentForm.addEventListener('submit', function(event) {
-      event.preventDefault(); 
+  function renderComments(snapshot) {
+    commentsList.innerHTML = "";
 
-      const nameInput = document.getElementById('name');
-      const msgInput = document.getElementById('msg');
-      const currentDateTime = new Date().toLocaleString();
+    const data = snapshot.val();
 
-      database.ref('comments').push({
-        name: nameInput.value,
-        message: msgInput.value,
-        time: currentDateTime
-      });
-
-      nameInput.value = '';
-      msgInput.value = '';
-    });
-
-    // FIXED: Corrected the single quote property crash ('&#39;')
-    function escapeHTML(str) {
-      if (!str) return '';
-      return str.replace(/[&<>'"]/g, 
-        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-      );
+    if (!data) {
+      commentsList.innerHTML =
+        '<p class="empty-message">No comments yet. Be the first to leave one!</p>';
+      return;
     }
-  </script>
+
+    const comments = Object.values(data);
+
+    comments.sort((a, b) => b.timestamp - a.timestamp);
+
+    const fragment = document.createDocumentFragment();
+
+    comments.forEach(comment => {
+      const item = document.createElement("div");
+      item.className = "comment-item";
+
+      item.innerHTML = `
+        <div class="comment-name">${escapeHTML(comment.name)}</div>
+        <div class="comment-time">${escapeHTML(comment.time || "")}</div>
+        <p class="comment-text">${escapeHTML(comment.message)}</p>
+      `;
+
+      fragment.appendChild(item);
+    });
+
+    commentsList.appendChild(fragment);
+  }
+
+  database.ref("comments").on(
+    "value",
+    renderComments,
+    function(error) {
+      commentsList.innerHTML =
+        "<p style='color:red;'>Failed to load comments.</p>";
+      console.error(error);
+    }
+  );
+
+  commentForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const nameInput = document.getElementById("name");
+    const msgInput = document.getElementById("msg");
+
+    const name = nameInput.value.trim();
+    const message = msgInput.value.trim();
+
+    if (!name || !message) {
+      alert("Please complete all fields.");
+      return;
+    }
+
+    if (name.length > 50) {
+      alert("Name is too long.");
+      return;
+    }
+
+    if (message.length > 1000) {
+      alert("Comment is too long.");
+      return;
+    }
+
+    const now = new Date();
+
+    database.ref("comments").push({
+      name: name,
+      message: message,
+      time: now.toLocaleString(),
+      timestamp: Date.now()
+    })
+    .then(() => {
+      nameInput.value = "";
+      msgInput.value = "";
+    })
+    .catch(error => {
+      console.error(error);
+      alert("Failed to post comment.");
+    });
+  });
+</script>
 
 </body>
 </html>
