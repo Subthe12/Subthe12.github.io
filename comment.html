@@ -1,1 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Comments</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #d5dfed;
+      padding: 40px;
+    }
+    .comment-box {
+      background: white;
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      padding: 30px;
+      border-radius: 20px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #B2AC88;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #999373;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #060b14;
+    }
+    .comments-display-box {
+      background: white;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 20px;
+    }
+    .comment-item {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .comment-item:last-child {
+      border-bottom: none;
+    }
+    .comment-content {
+      flex-grow: 1;
+      padding-right: 15px;
+    }
+    .comment-name {
+      font-weight: bold;
+      color: #060b14;
+      margin-bottom: 3px;
+    }
+    /* New timestamp styling */
+    .comment-time {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .comment-text {
+      color: #555;
+      margin: 0;
+    }
+    /* New delete button styling */
+    .delete-btn {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .delete-btn:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="comment-box">
+    <h2>Leave a Comment</h2>
+    <form id="commentForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required placeholder="Your name...">
+
+      <label for="msg">Message:</label>
+      <textarea id="msg" rows="5" required placeholder="Type your comment here..."></textarea>
+
+      <button type="submit">Post Comment</button>
+    </form>
+    
+    <a class="back-link" href="index.html">← Back to Summary</a>
+  </div>
+
+  <div class="comments-display-box">
+    <h2>All Comments</h2>
+    <div id="commentsList"></div>
+  </div>
+
+  <script>
+    const commentForm = document.getElementById('commentForm');
+    const commentsList = document.getElementById('commentsList');
+
+    // Function to load and display saved comments with timestamps and delete actions
+    function displayComments() {
+      commentsList.innerHTML = '';
+      const savedComments = JSON.parse(localStorage.getItem('myWebComments')) || [];
+      
+      if (savedComments.length === 0) {
+        commentsList.innerHTML = '<p style="color: #888;">No comments yet. Be the first!</p>';
+        return;
+      }
+
+      savedComments.forEach((comment, index) => {
+        const item = document.createElement('div');
+        item.className = 'comment-item';
+        item.innerHTML = `
+          <div class="comment-content">
+            <div class="comment-name">${escapeHTML(comment.name)}</div>
+            <div class="comment-time">${comment.time || 'Unknown date'}</div>
+            <p class="comment-text">${escapeHTML(comment.message)}</p>
+          </div>
+          <button class="delete-btn" onclick="deleteComment(${index})">Delete</button>
+        `;
+        commentsList.appendChild(item);
+      });
+    }
+
+    // Function to handle form submission
+    commentForm.addEventListener('submit', function(event) {
+      event.preventDefault(); 
+
+      const nameInput = document.getElementById('name');
+      const msgInput = document.getElementById('msg');
+
+      // Creates a clean readable date format (e.g., "08/06/2026, 11:08 AM")
+      const currentDateTime = new Date().toLocaleString();
+
+      const newComment = {
+        name: nameInput.value,
+        message: msgInput.value,
+        time: currentDateTime
+      };
+
+      const savedComments = JSON.parse(localStorage.getItem('myWebComments')) || [];
+      savedComments.push(newComment);
+      localStorage.setItem('myWebComments', JSON.stringify(savedComments));
+
+      nameInput.value = '';
+      msgInput.value = '';
+      displayComments();
+    });
+
+    // New function to handle comment deletion by its list placement index
+    function deleteComment(index) {
+      const savedComments = JSON.parse(localStorage.getItem('myWebComments')) || [];
+      savedComments.splice(index, 1); // Remove the chosen item from array
+      localStorage.setItem('myWebComments', JSON.stringify(savedComments));
+      displayComments(); // Refresh UI layout
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+
+    displayComments();
+  </script>
+
+</body>
+</html>
 
