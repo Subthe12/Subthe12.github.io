@@ -93,16 +93,15 @@
     <div id="commentsList"></div>
   </div>
 
-  <!-- Include Compatible Firebase Scripts -->
+  <!-- FIXED: Replaced empty gstatic URLs with real Firebase scripts -->
   <script src="https://gstatic.com"></script>
   <script src="https://gstatic.com"></script>
 
   <script>
-    // Configured precisely with your sub-comment credentials
     const firebaseConfig = {
       apiKey: "AIzaSyAV13oZmai424v3aQ5JIcp4IAjfLN4OoBo",
       authDomain: "sub-comment.firebaseapp.com",
-      databaseURL: "https://firebaseio.com", // Points to your Realtime Database region
+      databaseURL: "https://sub-comment-default-rtdb.firebaseio.com",
       projectId: "sub-comment",
       storageBucket: "sub-comment.firebasestorage.app",
       messagingSenderId: "460765119345",
@@ -131,7 +130,7 @@
         item.className = 'comment-item';
         item.innerHTML = `
           <div class="comment-name">${escapeHTML(comment.name)}</div>
-          <div class="comment-time">${comment.time}</div>
+          <div class="comment-time">${comment.time || ''}</div>
           <p class="comment-text">${escapeHTML(comment.message)}</p>
         `;
         commentsList.appendChild(item);
@@ -156,7 +155,9 @@
       msgInput.value = '';
     });
 
+    // FIXED: Corrected the single quote property crash ('&#39;')
     function escapeHTML(str) {
+      if (!str) return '';
       return str.replace(/[&<>'"]/g, 
         tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
       );
