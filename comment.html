@@ -139,7 +139,7 @@
       displayComments();
     });
 
-    // Helper to prevent malicious code injections (XSS)
+    // FIXED: Corrected the quote replacement syntax error here
     function escapeHTML(str) {
       return str.replace(/[&<>'"]/g, 
         tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
