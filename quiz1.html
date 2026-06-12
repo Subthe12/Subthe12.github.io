@@ -1,6 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub's Math Quiz Page</title>
+
+    <style>
+        html {
+            font-size: 24px;
+        }
+
+        body {
+            background-color: #d5dfed;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header1 {
+            color: white;
+            background-color: #B2AC88;
+            border-radius: 30px;
+            text-align: center;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        main {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex: 1;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 50px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background-color: #e7e7e7;
+            color: #333;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #d4d4d4;
+        }
+
+        #next-btn {
+            background-color: #B2AC88;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        #next-btn:hover {
+            opacity: 0.9;
+        }
+
+        .score-text {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #060b14;
+            color: white;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header1">
+    <h1>Interactive Mathematics Quiz</h1>
+</div>
+
+<main>
+    <div class="quiz-container">
+
+        <div id="quiz-box">
+            <h3 id="question-num"
+                style="color:#666;font-size:18px;margin:0;">
+                Question 1 of 50
+            </h3>
+
+            <h2 id="question"
+                style="margin-top:10px;color:#333;">
+                Question text goes here
+            </h2>
+
+            <div id="options-container" class="options"></div>
+
+            <button id="next-btn">
+                Next Question
+            </button>
+        </div>
+
+        <div id="result-box" style="display:none;">
+            <p class="score-text" id="score-display"></p>
+
+            <button
+                class="btn"
+                style="width:100%;text-align:center;background:#B2AC88;color:white;"
+                onclick="restartQuiz()">
+                Restart Quiz
+            </button>
+        </div>
+
+    </div>
+</main>
+
+<footer>
+    <p>Created for Sub's Page &copy; 2026</p>
+</footer>
+
 <script>
+
 const quizData = [
-    // Your 50 questions go here exactly as you already have them
+
+    /* Integers */
+
+    {
+        question: "What is the value of -15 + (-23)?",
+        answers: ["-38", "-8", "8", "38"],
+        correct: 0
+    },
+    {
+        question: "Simplify the expression: 42 - (-18).",
+        answers: ["24", "60", "-24", "-60"],
+        correct: 1
+    },
+    {
+        question: "Compute the product: (-8) × (-7).",
+        answers: ["-56", "56", "-15", "15"],
+        correct: 1
+    },
+    {
+        question: "Divide: -144 ÷ 12.",
+        answers: ["12", "-12", "132", "-132"],
+        correct: 1
+    },
+    {
+        question: "Evaluate: (-3)³",
+        answers: ["-9", "9", "-27", "27"],
+        correct: 2
+    },
+    {
+        question: "What is the absolute value of -98?",
+        answers: ["-98", "0", "98", "100"],
+        correct: 2
+    },
+    {
+        question: "Solve using order of operations: -5 + 4 × (-3).",
+        answers: ["3", "-17", "27", "-2"],
+        correct: 1
+    },
+    {
+        question: "Arrange from least to greatest: -7, 3, -12, 0, -2.",
+        answers: [
+            "-12, -7, -2, 0, 3",
+            "0, -2, 3, -7, -12",
+            "-2, -7, -12, 0, 3",
+            "3, 0, -2, -7, -12"
+        ],
+        correct: 0
+    },
+    {
+        question: "A submarine drops 150 metres, then rises 75 metres. What is its net depth change?",
+        answers: ["-225m", "-75m", "75m", "225m"],
+        correct: 1
+    },
+    {
+        question: "Find the difference between a peak at 2,500 metres and a valley at -120 metres.",
+        answers: ["2,380m", "2,620m", "-2,380m", "-2,620m"],
+        correct: 1
+    },
+
+    /* Sets */
+
+    {
+        question: "If A = {1, 2, 3} and B = {3, 4, 5}, find A ∪ B.",
+        answers: [
+            "{3}",
+            "{1, 2, 4, 5}",
+            "{1, 2, 3, 4, 5}",
+            "None"
+        ],
+        correct: 2
+    },
+    {
+        question: "If A = {a, b, c, d} and B = {c, d, e}, find A ∩ B.",
+        answers: [
+            "{c, d}",
+            "{a, b, e}",
+            "{a, b, c, d, e}",
+            "None"
+        ],
+        correct: 0
+    },
+    {
+        question: "What is the standard notation symbol for a null (empty) set?",
+        answers: ["{0}", "∅ or {}", "∞", "∪"],
+        correct: 1
+    },
+    {
+        question: "If Universal Set U = {1,2,3,4,5} and A = {2,4}, find A'.",
+        answers: [
+            "{2,4}",
+            "{1,3,5}",
+            "{1,2,3,4,5}",
+            "None"
+        ],
+        correct: 1
+    },
+    {
+        question: "State the number of subsets that can be formed from set M = {x,y,z}.",
+        answers: ["3", "6", "8", "9"],
+        correct: 2
+    },
+    {
+        question: "True or False: {5} ∈ {1,3,5,7}",
+        answers: ["True", "False"],
+        correct: 1
+    },
+    {
+        question: "If Set P has 8 elements and Set Q has 5 elements, what is the minimum possible elements in P ∪ Q?",
+        answers: ["5", "8", "13", "3"],
+        correct: 1
+    },
+    {
+        question: "What is the set of all even prime numbers in roster form?",
+        answers: ["{2}", "{2,4,6}", "{0,2}", "{}"],
+        correct: 0
+    },
+    {
+        question: "Describe the set {x | x is an integer and 2 < x < 6} by listing elements.",
+        answers: [
+            "{2,3,4,5,6}",
+            "{3,4,5}",
+            "{2,6}",
+            "{3,4,5,6}"
+        ],
+        correct: 1
+    },
+    {
+        question: "In a class of 30, 18 like tea, 15 like coffee, 5 like both. How many like neither?",
+        answers: ["2", "7", "5", "12"],
+        correct: 0
+    },
+
+    /* Fractions */
+
+    {
+        question: "Simplify the fraction 24/36 to its lowest terms.",
+        answers: ["12/18", "6/9", "2/3", "4/6"],
+        correct: 2
+    },
+    {
+        question: "Add the fractions: 2/5 + 1/3.",
+        answers: ["3/8", "11/15", "2/15", "7/15"],
+        correct: 1
+    },
+    {
+        question: "Subtract the fractions: 7/8 - 1/4.",
+        answers: ["6/8", "5/8", "3/4", "1/2"],
+        correct: 1
+    },
+        {
+        question: "Multiply: 3/7 × 14/9.",
+        answers: ["42/63", "2/3", "5/7", "6/7"],
+        correct: 1
+    },
+    {
+        question: "Divide: 5/6 ÷ 2/3.",
+        answers: ["5/4", "10/18", "5/9", "4/5"],
+        correct: 0
+    },
+    {
+        question: "Convert the mixed number 4 3/5 into an improper fraction.",
+        answers: ["12/5", "17/5", "23/5", "7/5"],
+        correct: 2
+    },
+    {
+        question: "Convert the improper fraction 23/7 into a mixed number.",
+        answers: ["3 2/7", "2 9/7", "3 1/7", "4 1/7"],
+        correct: 0
+    },
+    {
+        question: "Which fraction is larger: 5/8 or 7/11?",
+        answers: ["5/8", "7/11", "They are equal"],
+        correct: 1
+    },
+    {
+        question: "A recipe calls for 3/4 cup sugar. How much is needed for half the recipe?",
+        answers: ["3/8 cup", "1/2 cup", "1/4 cup", "1/3 cup"],
+        correct: 0
+    },
+    {
+        question: "Solve: (1/2 + 1/3) × 6/5.",
+        answers: ["1", "5/6", "5/5", "7/5"],
+        correct: 0
+    },
+
+    /* Algebra */
+
+    {
+        question: "Solve for x: 3x + 7 = 22.",
+        answers: ["x = 3", "x = 5", "x = 7", "x = 9"],
+        correct: 1
+    },
+    {
+        question: "Solve for y: y/4 - 5 = 2.",
+        answers: ["y = 28", "y = 12", "y = 8", "y = 16"],
+        correct: 0
+    },
+    {
+        question: "Expand the expression: 4(2x - 5).",
+        answers: ["8x - 5", "8x - 20", "6x - 9", "8x + 20"],
+        correct: 1
+    },
+    {
+        question: "Factor completely: 5x² - 15x.",
+        answers: ["5(x² - 3x)", "x(5x - 15)", "5x(x - 3)", "15x(x - 1)"],
+        correct: 2
+    },
+    {
+        question: "Simplify by combining like terms: 3a + 5b - 2a + 7b.",
+        answers: ["a + 12b", "5a + 12b", "a - 2b", "13ab"],
+        correct: 0
+    },
+    {
+        question: "If x = -3 and y = 4, evaluate 2x + 3y.",
+        answers: ["18", "6", "-6", "0"],
+        correct: 1
+    },
+    {
+        question: "Solve the inequality: 2x - 3 > 7.",
+        answers: ["x > 2", "x > 5", "x < 5", "x > 10"],
+        correct: 1
+    },
+    {
+        question: "Find the value of x: 5x - 4 = 2x + 11.",
+        answers: ["x = 3", "x = 5", "x = 7", "x = 2"],
+        correct: 1
+    },
+    {
+        question: "Factor the quadratic expression: x² + 5x + 6.",
+        answers: [
+            "(x + 1)(x + 6)",
+            "(x + 2)(x + 3)",
+            "(x - 2)(x - 3)",
+            "(x + 5)(x + 1)"
+        ],
+        correct: 1
+    },
+    {
+        question: "The sum of three consecutive integers is 72. Find the smallest integer.",
+        answers: ["23", "24", "25", "22"],
+        correct: 0
+    },
+
+    /* Geometry */
+
+    {
+        question: "Find the area of a triangle with base 12 cm and height 7 cm.",
+        answers: ["84 cm²", "42 cm²", "19 cm²", "38 cm²"],
+        correct: 1
+    },
+    {
+        question: "Calculate the perimeter of a rectangle with length 15 m and width 8 m.",
+        answers: ["23 m", "46 m", "120 m", "60 m"],
+        correct: 1
+    },
+    {
+        question: "What is the circumference of a circle with a radius of 7 cm? (π ≈ 22/7)",
+        answers: ["22 cm", "44 cm", "154 cm", "98 cm"],
+        correct: 1
+    },
+    {
+        question: "Find the missing angle in a triangle if two angles measure 45° and 85°.",
+        answers: ["50°", "45°", "60°", "90°"],
+        correct: 0
+    },
+    {
+        question: "What is the complementary angle to 37°?",
+        answers: ["143°", "53°", "63°", "90°"],
+        correct: 1
+    },
+    {
+        question: "What is the supplementary angle to 115°?",
+        answers: ["65°", "75°", "180°", "55°"],
+        correct: 0
+    },
+    {
+        question: "Calculate the volume of a rectangular prism with dimensions 5cm × 4cm × 10cm.",
+        answers: ["19 cm³", "200 cm³", "100 cm³", "40 cm³"],
+        correct: 1
+    },
+    {
+        question: "State the Pythagorean theorem formula.",
+        answers: ["a + b = c", "a² + b² = c²", "A = bh", "P = 2(l+w)"],
+        correct: 1
+    },
+    {
+        question: "Find the hypotenuse of a right triangle with legs measuring 6 cm and 8 cm.",
+        answers: ["14 cm", "10 cm", "48 cm", "12 cm"],
+        correct: 1
+    },
+    {
+        question: "How many degrees are there in the total interior angles of a regular hexagon?",
+        answers: ["360°", "540°", "720°", "900°"],
+        correct: 2
+    }
 ];
 
 const questionEl = document.getElementById("question");
@@ -20,7 +467,6 @@ function startQuiz() {
 
     quizBox.style.display = "block";
     resultBox.style.display = "none";
-    nextBtn.style.display = "none";
 
     showQuestion();
 }
@@ -53,15 +499,14 @@ function showQuestion() {
 function selectAnswer(selectedIndex) {
     const currentQuestion = quizData[currentQuestionIndex];
 
+    const buttons = optionsContainer.getElementsByClassName("btn");
+
     if (selectedIndex === currentQuestion.correct) {
         score++;
     }
 
-    const buttons = optionsContainer.getElementsByClassName("btn");
-
     for (let button of buttons) {
         button.disabled = true;
-        button.style.cursor = "default";
     }
 
     if (selectedIndex === currentQuestion.correct) {
@@ -92,8 +537,11 @@ function showResults() {
     quizBox.style.display = "none";
     resultBox.style.display = "block";
 
+    const percentage =
+        ((score / quizData.length) * 100).toFixed(1);
+
     scoreDisplay.innerText =
-        `Quiz Complete! You scored ${score} out of ${quizData.length}!`;
+        `Quiz Complete! You scored ${score} out of ${quizData.length} (${percentage}%)`;
 }
 
 function restartQuiz() {
@@ -101,4 +549,8 @@ function restartQuiz() {
 }
 
 startQuiz();
+
 </script>
+
+</body>
+</html>
