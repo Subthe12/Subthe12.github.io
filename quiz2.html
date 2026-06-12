@@ -1,1 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub's Math Quiz Page</title>
 
+    <style>
+        html {
+            font-size: 24px;
+        }
+
+        body {
+            background-color: #d5dfed;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header1 {
+            color: white;
+            background-color: #B2AC88;
+            border-radius: 30px;
+            text-align: center;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        main {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex: 1;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 50px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background-color: #e7e7e7;
+            color: #333;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #d4d4d4;
+        }
+
+        #next-btn {
+            background-color: #B2AC88;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        #next-btn:hover {
+            opacity: 0.9;
+        }
+
+        .score-text {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #060b14;
+            color: white;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header1">
+    <h1> Mathematics Quiz</h1>
+</div>
+
+<main>
+    <div class="quiz-container">
+
+        <div id="quiz-box">
+            <h3 id="question-num"
+                style="color:#666;font-size:18px;margin:0;">
+                Question 1 of 50
+            </h3>
+
+            <h2 id="question"
+                style="margin-top:10px;color:#333;">
+                Question text goes here
+            </h2>
+
+            <div id="options-container" class="options"></div>
+
+            <button id="next-btn">
+                Next Question
+            </button>
+        </div>
+
+        <div id="result-box" style="display:none;">
+            <p class="score-text" id="score-display"></p>
+
+            <button
+                class="btn"
+                style="width:100%;text-align:center;background:#B2AC88;color:white;"
+                onclick="restartQuiz()">
+                Restart Quiz
+            </button>
+        </div>
+
+    </div>
+</main>
+<script>
+
+const quizData = [
+
+/* Topographical Sheet */
+
+{
+    question: "What is a topographical sheet primarily used for?",
+    answers: [
+        "Showing weather patterns",
+        "Representing physical and cultural features of an area",
+        "Studying planets",
+        "Recording earthquakes"
+    ],
+    correct: 1
+},
+{
+    question: "Contour lines join places of equal:",
+    answers: ["Temperature", "Rainfall", "Elevation", "Pressure"],
+    correct: 2
+},
+{
+    question: "Closely spaced contour lines indicate:",
+    answers: ["Gentle slope", "Steep slope", "Flat land", "Valley"],
+    correct: 1
+},
+{
+    question: "Widely spaced contour lines indicate:",
+    answers: ["Steep slope", "Cliff", "Gentle slope", "Hill"],
+    correct: 2
+},
+{
+    question: "A grid reference helps to:",
+    answers: [
+        "Measure rainfall",
+        "Find exact locations on a map",
+        "Predict climate",
+        "Study soil"
+    ],
+    correct: 1
+},
+{
+    question: "Blue colour on a topo sheet usually represents:",
+    answers: ["Vegetation", "Roads", "Water bodies", "Settlements"],
+    correct: 2
+},
+{
+    question: "Brown colour is commonly used for:",
+    answers: ["Contour lines", "Railways", "Forests", "Buildings"],
+    correct: 0
+},
+{
+    question: "A scale of 1:50,000 means:",
+    answers: [
+        "1 cm = 500 m",
+        "1 cm = 50,000 cm on ground",
+        "1 cm = 50 km",
+        "1 cm = 5 km"
+    ],
+    correct: 1
+},
+{
+    question: "The direction opposite to east is:",
+    answers: ["North", "South", "West", "North-East"],
+    correct: 2
+},
+{
+    question: "A benchmark on a map indicates:",
+    answers: [
+        "Road junction",
+        "Measured elevation point",
+        "Forest area",
+        "Village"
+    ],
+    correct: 1
+},
+{
+    question: "The conventional sign of a railway line consists of:",
+    answers: [
+        "Parallel lines with cross bars",
+        "Blue curved line",
+        "Brown circles",
+        "Green patches"
+    ],
+    correct: 0
+},
+{
+    question: "The four-figure grid reference identifies a:",
+    answers: [
+        "Point exactly",
+        "Grid square",
+        "River",
+        "Road"
+    ],
+    correct: 1
+},
+{
+    question: "The six-figure grid reference identifies:",
+    answers: [
+        "An exact location",
+        "A district",
+        "A mountain range",
+        "A contour"
+    ],
+    correct: 0
+},
+
+/* Atmosphere */
+
+{
+    question: "The atmosphere is a blanket of:",
+    answers: ["Rocks", "Water", "Gases", "Ice"],
+    correct: 2
+},
+{
+    question: "Which gas forms about 78% of the atmosphere?",
+    answers: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+    correct: 1
+},
+{
+    question: "The layer closest to Earth is:",
+    answers: [
+        "Stratosphere",
+        "Mesosphere",
+        "Troposphere",
+        "Thermosphere"
+    ],
+    correct: 2
+},
+{
+    question: "Weather phenomena occur mainly in the:",
+    answers: [
+        "Troposphere",
+        "Mesosphere",
+        "Exosphere",
+        "Thermosphere"
+    ],
+    correct: 0
+},
+{
+    question: "The ozone layer is found in the:",
+    answers: [
+        "Troposphere",
+        "Stratosphere",
+        "Mesosphere",
+        "Exosphere"
+    ],
+    correct: 1
+},
+{
+    question: "Which gas is essential for human respiration?",
+    answers: ["Nitrogen", "Argon", "Oxygen", "Helium"],
+    correct: 2
+},
+{
+    question: "The atmosphere protects Earth from:",
+    answers: [
+        "Sunlight",
+        "Rainfall",
+        "Harmful solar radiation",
+        "Gravity"
+    ],
+    correct: 2
+},
+{
+    question: "Air pressure decreases with:",
+    answers: [
+        "Decreasing altitude",
+        "Increasing altitude",
+        "Rainfall",
+        "Humidity"
+    ],
+    correct: 1
+},
+{
+    question: "The uppermost atmospheric layer is:",
+    answers: [
+        "Mesosphere",
+        "Thermosphere",
+        "Exosphere",
+        "Troposphere"
+    ],
+    correct: 2
+},
+{
+    question: "Carbon dioxide is important because it:",
+    answers: [
+        "Causes tides",
+        "Supports photosynthesis",
+        "Produces oxygen",
+        "Creates wind"
+    ],
+    correct: 1
+},
+{
+    question: "Which instrument measures atmospheric pressure?",
+    answers: [
+        "Thermometer",
+        "Rain gauge",
+        "Barometer",
+        "Hygrometer"
+    ],
+    correct: 2
+},
+{
+    question: "The atmosphere is held around Earth by:",
+    answers: ["Wind", "Magnetism", "Gravity", "Pressure"],
+    correct: 2
+},
+
+/* Weather and Climate */
+
+{
+    question: "Weather refers to atmospheric conditions over a:",
+    answers: ["Long period", "Short period", "Century", "Decade"],
+    correct: 1
+},
+{
+    question: "Climate refers to weather conditions over:",
+    answers: [
+        "A few hours",
+        "A few days",
+        "A long period of time",
+        "One week"
+    ],
+    correct: 2
+},
+{
+    question: "Which instrument measures temperature?",
+    answers: [
+        "Barometer",
+        "Thermometer",
+        "Anemometer",
+        "Rain gauge"
+    ],
+    correct: 1
+},
+{
+    question: "Rainfall is measured using a:",
+    answers: [
+        "Barometer",
+        "Anemometer",
+        "Rain gauge",
+        "Thermometer"
+    ],
+    correct: 2
+},
+{
+    question: "Wind speed is measured by:",
+    answers: [
+        "Anemometer",
+        "Barometer",
+        "Hygrometer",
+        "Rain gauge"
+    ],
+    correct: 0
+},
+{
+    question: "Humidity means the amount of:",
+    answers: [
+        "Dust in air",
+        "Water vapour in air",
+        "Oxygen in air",
+        "Heat in air"
+    ],
+    correct: 1
+},
+{
+    question: "Which factor strongly influences climate?",
+    answers: [
+        "Altitude",
+        "Colour of soil",
+        "Type of rock",
+        "Population"
+    ],
+    correct: 0
+},
+{
+    question: "Sea breeze usually blows during:",
+    answers: ["Day", "Night", "Winter only", "Monsoon only"],
+    correct: 0
+},
+{
+    question: "Land breeze generally occurs at:",
+    answers: ["Morning", "Afternoon", "Night", "Noon"],
+    correct: 2
+},
+{
+    question: "Clouds form when water vapour:",
+    answers: [
+        "Evaporates",
+        "Condenses",
+        "Freezes instantly",
+        "Disappears"
+    ],
+    correct: 1
+},
+{
+    question: "The process by which water changes into vapour is:",
+    answers: [
+        "Condensation",
+        "Precipitation",
+        "Evaporation",
+        "Infiltration"
+    ],
+    correct: 2
+},
+{
+    question: "Monsoon winds are important because they bring:",
+    answers: [
+        "Snow",
+        "Rainfall",
+        "Dust storms",
+        "Cold waves"
+    ],
+    correct: 1
+},
+{
+    question: "The average weather of a place over many years is called:",
+    answers: [
+        "Humidity",
+        "Pressure",
+        "Climate",
+        "Forecast"
+    ],
+    correct: 2
+},
+
+/* Weathering and Soil Formation */
+
+{
+    question: "Weathering is the breakdown of rocks:",
+    answers: [
+        "By transport",
+        "In their original place",
+        "Only by rivers",
+        "Only by wind"
+    ],
+    correct: 1
+},
+{
+    question: "Weathering caused by temperature changes is:",
+    answers: [
+        "Chemical weathering",
+        "Mechanical weathering",
+        "Biological weathering",
+        "Soil erosion"
+    ],
+    correct: 1
+},
+{
+    question: "Chemical weathering involves:",
+    answers: [
+        "Breaking only",
+        "Movement of rocks",
+        "Chemical changes in minerals",
+        "Earthquakes"
+    ],
+    correct: 2
+},
+{
+    question: "Plant roots can cause:",
+    answers: [
+        "Mechanical weathering",
+        "Rainfall",
+        "Volcanoes",
+        "Deposition"
+    ],
+    correct: 0
+},
+{
+    question: "Soil is formed mainly from:",
+    answers: [
+        "Weathered rock material",
+        "Ocean water",
+        "Clouds",
+        "Wind only"
+    ],
+    correct: 0
+},
+{
+    question: "Humus is:",
+    answers: [
+        "Broken rock",
+        "Organic matter in soil",
+        "Sand",
+        "Clay"
+    ],
+    correct: 1
+},
+{
+    question: "The uppermost layer of soil is called:",
+    answers: [
+        "Bedrock",
+        "Subsoil",
+        "Topsoil",
+        "Parent rock"
+    ],
+    correct: 2
+},
+{
+    question: "Which soil particle is the largest?",
+    answers: [
+        "Clay",
+        "Silt",
+        "Sand",
+        "Humus"
+    ],
+    correct: 2
+},
+{
+    question: "Leaching refers to:",
+    answers: [
+        "Addition of minerals",
+        "Washing away of minerals",
+        "Rock formation",
+        "Evaporation"
+    ],
+    correct: 1
+},
+{
+    question: "Biological weathering is caused by:",
+    answers: [
+        "Living organisms",
+        "Rain only",
+        "Wind only",
+        "Sunlight only"
+    ],
+    correct: 0
+},
+{
+    question: "Which factor affects soil formation?",
+    answers: [
+        "Climate",
+        "Parent rock",
+        "Living organisms",
+        "All of these"
+    ],
+    correct: 3
+},
+{
+    question: "Clay soils generally:",
+    answers: [
+        "Drain quickly",
+        "Retain water well",
+        "Contain no minerals",
+        "Cannot support plants"
+    ],
+    correct: 1
+}
+];
+
+const questionEl = document.getElementById("question");
+const questionNumEl = document.getElementById("question-num");
+const optionsContainer = document.getElementById("options-container");
+const nextBtn = document.getElementById("next-btn");
+const quizBox = document.getElementById("quiz-box");
+const resultBox = document.getElementById("result-box");
+const scoreDisplay = document.getElementById("score-display");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+
+    quizBox.style.display = "block";
+    resultBox.style.display = "none";
+
+    showQuestion();
+}
+
+function showQuestion() {
+    nextBtn.style.display = "none";
+    optionsContainer.innerHTML = "";
+
+    const currentQuestion = quizData[currentQuestionIndex];
+
+    questionNumEl.innerText =
+        `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+
+    questionEl.innerText = currentQuestion.question;
+
+    currentQuestion.answers.forEach((answer, index) => {
+        const button = document.createElement("button");
+
+        button.innerText = answer;
+        button.classList.add("btn");
+
+        button.addEventListener("click", () => {
+            selectAnswer(index);
+        });
+
+        optionsContainer.appendChild(button);
+    });
+}
+
+function selectAnswer(selectedIndex) {
+    const currentQuestion = quizData[currentQuestionIndex];
+
+    const buttons = optionsContainer.getElementsByClassName("btn");
+
+    if (selectedIndex === currentQuestion.correct) {
+        score++;
+    }
+
+    for (let button of buttons) {
+        button.disabled = true;
+    }
+
+    if (selectedIndex === currentQuestion.correct) {
+        buttons[selectedIndex].style.background = "#4CAF50";
+        buttons[selectedIndex].style.color = "white";
+    } else {
+        buttons[selectedIndex].style.background = "#f44336";
+        buttons[selectedIndex].style.color = "white";
+
+        buttons[currentQuestion.correct].style.background = "#4CAF50";
+        buttons[currentQuestion.correct].style.color = "white";
+    }
+
+    nextBtn.style.display = "block";
+}
+
+nextBtn.addEventListener("click", () => {
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < quizData.length) {
+        showQuestion();
+    } else {
+        showResults();
+    }
+});
+
+function showResults() {
+    quizBox.style.display = "none";
+    resultBox.style.display = "block";
+
+    const percentage =
+        ((score / quizData.length) * 100).toFixed(1);
+
+    scoreDisplay.innerText =
+        `Quiz Complete! You scored ${score} out of ${quizData.length} (${percentage}%)`;
+}
+
+function restartQuiz() {
+    startQuiz();
+}
+
+startQuiz();
+
+</script>
+
+</body>
+</html>
