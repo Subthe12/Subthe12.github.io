@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sub's Math Quiz Page</title>
+    <title>Sub's Math Quiz</title>
 
     <style>
         body {
@@ -24,6 +24,17 @@
             margin: 20px;
         }
 
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
         main {
             display: flex;
             gap: 40px;
@@ -39,6 +50,22 @@
             width: 100%;
             max-width: 600px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .timer-box {
+            background-color: #ffeb3b;
+            color: #333;
+            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 16px;
         }
 
         .options {
@@ -64,32 +91,38 @@
             background-color: #d4d4d4;
         }
 
-        /* Selected state during quiz (neutral blue highlight) */
         .btn.selected {
             background-color: #2196F3;
             color: white;
         }
 
-        #next-btn {
-            background-color: #B2AC88;
-            color: white;
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
             border: none;
-            padding: 14px;
-            width: 100%;
-            font-size: 18px;
             border-radius: 8px;
             cursor: pointer;
-            display: none;
+            font-weight: bold;
+            transition: opacity 0.2s;
         }
 
-        #next-btn:hover {
-            opacity: 0.9;
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .score-card {
-            text-align: center;
-        }
+        #back-btn { background-color: #757575; color: white; }
+        #skip-btn { background-color: #ff9800; color: white; }
+        #next-btn { background-color: #B2AC88; color: white; }
 
+        .score-card { text-align: center; }
         .score-text {
             font-size: 26px;
             font-weight: bold;
@@ -104,23 +137,15 @@
         }
 
         .stat-box {
-            padding: 15px 25px;
+            padding: 12px 18px;
             border-radius: 12px;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
         }
 
-        .correct-box {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-            border: 1px solid #c8e6c9;
-        }
-
-        .wrong-box {
-            background-color: #ffebee;
-            color: #c62828;
-            border: 1px solid #ffcdd2;
-        }
+        .correct-box { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .wrong-box { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        .skipped-box { background-color: #fff3e0; color: #ef6c00; border: 1px solid #ffe0b2; }
 
         footer {
             background-color: #060b14;
@@ -131,25 +156,30 @@
             margin-top: auto;
         }
 
-        footer a {
-            color: white;
-        }
+        footer a { color: white; }
     </style>
 </head>
 
 <body>
 
 <div class="header1">
-    <h1>Mathematics Quiz</h1>
+    <h1> Mathematics Quiz</h1>
+    <nav>
+        <a href="math.html" style="text-decoration: underline;">Math Quiz</a> | 
+        <a href="geography.html">Geography Quiz</a>
+    </nav>
 </div>
 
 <main>
     <div class="quiz-container">
 
         <div id="quiz-box">
-            <h3 id="question-num" style="color:#666;font-size:18px;margin:0;">
-                Question 1 of 50
-            </h3>
+            <div class="quiz-header">
+                <h3 id="question-num" style="color:#666;font-size:18px;margin:0;">
+                    Question 1 of 10
+                </h3>
+                <div class="timer-box" id="timer">Time Left: 15s</div>
+            </div>
 
             <h2 id="question" style="margin-top:10px;color:#333;">
                 Question text goes here
@@ -157,7 +187,11 @@
 
             <div id="options-container" class="options"></div>
 
-            <button id="next-btn">Next Question</button>
+            <div class="nav-buttons">
+                <button id="back-btn" class="action-btn">Back</button>
+                <button id="skip-btn" class="action-btn">Skip</button>
+                <button id="next-btn" class="action-btn">Next</button>
+            </div>
         </div>
 
         <div id="result-box" style="display:none;">
@@ -170,6 +204,9 @@
                     </div>
                     <div class="stat-box wrong-box">
                         Wrong: <span id="wrong-count">0</span>
+                    </div>
+                    <div class="stat-box skipped-box">
+                        Skipped: <span id="skipped-count">0</span>
                     </div>
                 </div>
 
@@ -191,335 +228,82 @@
 
 <script>
 const quizData = [
-    /* Integers */
-    {
-        question: "What is the value of -15 + (-23)?",
-        answers: ["-38", "-8", "8", "38"],
-        correct: 0
-    },
-    {
-        question: "Simplify the expression: 42 - (-18).",
-        answers: ["24", "60", "-24", "-60"],
-        correct: 1
-    },
-    {
-        question: "Compute the product: (-8) × (-7).",
-        answers: ["-56", "56", "-15", "15"],
-        correct: 1
-    },
-    {
-        question: "Divide: -144 ÷ 12.",
-        answers: ["12", "-12", "132", "-132"],
-        correct: 1
-    },
-    {
-        question: "Evaluate: (-3)³",
-        answers: ["-9", "9", "-27", "27"],
-        correct: 2
-    },
-    {
-        question: "What is the absolute value of -98?",
-        answers: ["-98", "0", "98", "100"],
-        correct: 2
-    },
-    {
-        question: "Solve using order of operations: -5 + 4 × (-3).",
-        answers: ["3", "-17", "27", "-2"],
-        correct: 1
-    },
-    {
-        question: "Arrange from least to greatest: -7, 3, -12, 0, -2.",
-        answers: [
-            "-12, -7, -2, 0, 3",
-            "0, -2, 3, -7, -12",
-            "-2, -7, -12, 0, 3",
-            "3, 0, -2, -7, -12"
-        ],
-        correct: 0
-    },
-    {
-        question: "A submarine drops 150 metres, then rises 75 metres. What is its net depth change?",
-        answers: ["-225m", "-75m", "75m", "225m"],
-        correct: 1
-    },
-    {
-        question: "Find the difference between a peak at 2,500 metres and a valley at -120 metres.",
-        answers: ["2,380m", "2,620m", "-2,380m", "-2,620m"],
-        correct: 1
-    },
-
-    /* Sets */
-    {
-        question: "If A = {1, 2, 3} and B = {3, 4, 5}, find A ∪ B.",
-        answers: [
-            "{3}",
-            "{1, 2, 4, 5}",
-            "{1, 2, 3, 4, 5}",
-            "None"
-        ],
-        correct: 2
-    },
-    {
-        question: "If A = {a, b, c, d} and B = {c, d, e}, find A ∩ B.",
-        answers: [
-            "{c, d}",
-            "{a, b, e}",
-            "{a, b, c, d, e}",
-            "None"
-        ],
-        correct: 0
-    },
-    {
-        question: "What is the standard notation symbol for a null (empty) set?",
-        answers: ["{0}", "∅ or {}", "∞", "∪"],
-        correct: 1
-    },
-    {
-        question: "If Universal Set U = {1,2,3,4,5} and A = {2,4}, find A'.",
-        answers: [
-            "{2,4}",
-            "{1,3,5}",
-            "{1,2,3,4,5}",
-            "None"
-        ],
-        correct: 1
-    },
-    {
-        question: "State the number of subsets that can be formed from set M = {x,y,z}.",
-        answers: ["3", "6", "8", "9"],
-        correct: 2
-    },
-    {
-        question: "True or False: {5} ∈ {1,3,5,7}",
-        answers: ["True", "False"],
-        correct: 1
-    },
-    {
-        question: "If Set P has 8 elements and Set Q has 5 elements, what is the minimum possible elements in P ∪ Q?",
-        answers: ["5", "8", "13", "3"],
-        correct: 1
-    },
-    {
-        question: "What is the set of all even prime numbers in roster form?",
-        answers: ["{2}", "{2,4,6}", "{0,2}", "{}"],
-        correct: 0
-    },
-    {
-        question: "Describe the set {x | x is an integer and 2 < x < 6} by listing elements.",
-        answers: [
-            "{2,3,4,5,6}",
-            "{3,4,5}",
-            "{2,6}",
-            "{3,4,5,6}"
-        ],
-        correct: 1
-    },
-    {
-        question: "In a class of 30, 18 like tea, 15 like coffee, 5 like both. How many like neither?",
-        answers: ["2", "7", "5", "12"],
-        correct: 0
-    },
-
-    /* Fractions */
-    {
-        question: "Simplify the fraction 24/36 to its lowest terms.",
-        answers: ["12/18", "6/9", "2/3", "4/6"],
-        correct: 2
-    },
-    {
-        question: "Add the fractions: 2/5 + 1/3.",
-        answers: ["3/8", "11/15", "2/15", "7/15"],
-        correct: 1
-    },
-    {
-        question: "Subtract the fractions: 7/8 - 1/4.",
-        answers: ["6/8", "5/8", "3/4", "1/2"],
-        correct: 1
-    },
-    {
-        question: "Multiply: 3/7 × 14/9.",
-        answers: ["42/63", "2/3", "5/7", "6/7"],
-        correct: 1
-    },
-    {
-        question: "Divide: 5/6 ÷ 2/3.",
-        answers: ["5/4", "10/18", "5/9", "4/5"],
-        correct: 0
-    },
-    {
-        question: "Convert the mixed number 4 3/5 into an improper fraction.",
-        answers: ["12/5", "17/5", "23/5", "7/5"],
-        correct: 2
-    },
-    {
-        question: "Convert the improper fraction 23/7 into a mixed number.",
-        answers: ["3 2/7", "2 9/7", "3 1/7", "4 1/7"],
-        correct: 0
-    },
-    {
-        question: "Which fraction is larger: 5/8 or 7/11?",
-        answers: ["5/8", "7/11", "They are equal"],
-        correct: 1
-    },
-    {
-        question: "A recipe calls for 3/4 cup sugar. How much is needed for half the recipe?",
-        answers: ["3/8 cup", "1/2 cup", "1/4 cup", "1/3 cup"],
-        correct: 0
-    },
-    {
-        question: "Solve: (1/2 + 1/3) × 6/5.",
-        answers: ["1", "5/6", "5/5", "7/5"],
-        correct: 0
-    },
-
-    /* Algebra */
-    {
-        question: "Solve for x: 3x + 7 = 22.",
-        answers: ["x = 3", "x = 5", "x = 7", "x = 9"],
-        correct: 1
-    },
-    {
-        question: "Solve for y: y/4 - 5 = 2.",
-        answers: ["y = 28", "y = 12", "y = 8", "y = 16"],
-        correct: 0
-    },
-    {
-        question: "Expand the expression: 4(2x - 5).",
-        answers: ["8x - 5", "8x - 20", "6x - 9", "8x + 20"],
-        correct: 1
-    },
-    {
-        question: "Factor completely: 5x² - 15x.",
-        answers: ["5(x² - 3x)", "x(5x - 15)", "5x(x - 3)", "15x(x - 1)"],
-        correct: 2
-    },
-    {
-        question: "Simplify by combining like terms: 3a + 5b - 2a + 7b.",
-        answers: ["a + 12b", "5a + 12b", "a - 2b", "13ab"],
-        correct: 0
-    },
-    {
-        question: "If x = -3 and y = 4, evaluate 2x + 3y.",
-        answers: ["18", "6", "-6", "0"],
-        correct: 1
-    },
-    {
-        question: "Solve the inequality: 2x - 3 > 7.",
-        answers: ["x > 2", "x > 5", "x < 5", "x > 10"],
-        correct: 1
-    },
-    {
-        question: "Find the value of x: 5x - 4 = 2x + 11.",
-        answers: ["x = 3", "x = 5", "x = 7", "x = 2"],
-        correct: 1
-    },
-    {
-        question: "Factor the quadratic expression: x² + 5x + 6.",
-        answers: [
-            "(x + 1)(x + 6)",
-            "(x + 2)(x + 3)",
-            "(x - 2)(x - 3)",
-            "(x + 5)(x + 1)"
-        ],
-        correct: 1
-    },
-    {
-        question: "The sum of three consecutive integers is 72. Find the smallest integer.",
-        answers: ["23", "24", "25", "22"],
-        correct: 0
-    },
-
-    /* Geometry */
-    {
-        question: "Find the area of a triangle with base 12 cm and height 7 cm.",
-        answers: ["84 cm²", "42 cm²", "19 cm²", "38 cm²"],
-        correct: 1
-    },
-    {
-        question: "Calculate the perimeter of a rectangle with length 15 m and width 8 m.",
-        answers: ["23 m", "46 m", "120 m", "60 m"],
-        correct: 1
-    },
-    {
-        question: "What is the circumference of a circle with a radius of 7 cm? (π ≈ 22/7)",
-        answers: ["22 cm", "44 cm", "154 cm", "98 cm"],
-        correct: 1
-    },
-    {
-        question: "Find the missing angle in a triangle if two angles measure 45° and 85°.",
-        answers: ["50°", "45°", "60°", "90°"],
-        correct: 0
-    },
-    {
-        question: "What is the complementary angle to 37°?",
-        answers: ["143°", "53°", "63°", "90°"],
-        correct: 1
-    },
-    {
-        question: "What is the supplementary angle to 115°?",
-        answers: ["65°", "75°", "180°", "55°"],
-        correct: 0
-    },
-    {
-        question: "Calculate the volume of a rectangular prism with dimensions 5cm × 4cm × 10cm.",
-        answers: ["19 cm³", "200 cm³", "100 cm³", "40 cm³"],
-        correct: 1
-    },
-    {
-        question: "State the Pythagorean theorem formula.",
-        answers: ["a + b = c", "a² + b² = c²", "A = bh", "P = 2(l+w)"],
-        correct: 1
-    },
-    {
-        question: "Find the hypotenuse of a right triangle with legs measuring 6 cm and 8 cm.",
-        answers: ["14 cm", "10 cm", "48 cm", "12 cm"],
-        correct: 1
-    },
-    {
-        question: "How many degrees are there in the total interior angles of a regular hexagon?",
-        answers: ["360°", "540°", "720°", "900°"],
-        correct: 2
-    }
+    { question: "What is the square root of 144?", answers: ["10", "12", "14", "16"], correct: 1 },
+    { question: "Solve for x: 2x + 5 = 15", answers: ["x = 3", "x = 5", "x = 10", "x = 4"], correct: 1 },
+    { question: "What is the area of a rectangle with length 8 cm and width 5 cm?", answers: ["13 cm²", "40 cm²", "26 cm²", "35 cm²"], correct: 1 },
+    { question: "What is 15% of 200?", answers: ["20", "25", "30", "35"], correct: 2 },
+    { question: "What is the value of 3³ (3 to the power of 3)?", answers: ["9", "27", "81", "18"], correct: 1 },
+    { question: "What is the perimeter of a square with a side length of 6 cm?", answers: ["12 cm", "24 cm", "36 cm", "18 cm"], correct: 1 },
+    { question: "What is the value of 7 × 8?", answers: ["48", "54", "56", "64"], correct: 2 },
+    { question: "What is the smallest prime number?", answers: ["0", "1", "2", "3"], correct: 2 },
+    { question: "If a triangle has angles 60° and 30°, what is the third angle?", answers: ["90°", "60°", "45°", "100°"], correct: 0 },
+    { question: "What is 100 divided by 4?", answers: ["20", "25", "30", "50"], correct: 1 }
 ];
 
 const questionEl = document.getElementById("question");
 const questionNumEl = document.getElementById("question-num");
 const optionsContainer = document.getElementById("options-container");
+const timerEl = document.getElementById("timer");
+
+const backBtn = document.getElementById("back-btn");
+const skipBtn = document.getElementById("skip-btn");
 const nextBtn = document.getElementById("next-btn");
+
 const quizBox = document.getElementById("quiz-box");
 const resultBox = document.getElementById("result-box");
 const scoreDisplay = document.getElementById("score-display");
 const correctCountEl = document.getElementById("correct-count");
 const wrongCountEl = document.getElementById("wrong-count");
+const skippedCountEl = document.getElementById("skipped-count");
 
 let currentQuestionIndex = 0;
-let score = 0;
-let selectedAnswerIndex = null;
+let userAnswers = new Array(quizData.length).fill(null); 
+
+const QUESTION_TIME_LIMIT = 15;
+let timeLeft = QUESTION_TIME_LIMIT;
+let timerInterval = null;
 
 function startQuiz() {
     currentQuestionIndex = 0;
-    score = 0;
-
+    userAnswers = new Array(quizData.length).fill(null);
     quizBox.style.display = "block";
     resultBox.style.display = "none";
-
     showQuestion();
 }
 
-function showQuestion() {
-    selectedAnswerIndex = null;
-    nextBtn.style.display = "none";
-    optionsContainer.innerHTML = "";
+function startTimer() {
+    clearInterval(timerInterval);
+    timeLeft = QUESTION_TIME_LIMIT;
+    timerEl.innerText = `Time Left: ${timeLeft}s`;
 
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerEl.innerText = `Time Left: ${timeLeft}s`;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            navigateNext();
+        }
+    }, 1000);
+}
+
+function showQuestion() {
+    startTimer();
+    optionsContainer.innerHTML = "";
     const currentQuestion = quizData[currentQuestionIndex];
 
     questionNumEl.innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
     questionEl.innerText = currentQuestion.question;
+    backBtn.disabled = currentQuestionIndex === 0;
 
     currentQuestion.answers.forEach((answer, index) => {
         const button = document.createElement("button");
         button.innerText = answer;
         button.classList.add("btn");
+
+        if (userAnswers[currentQuestionIndex] === index) {
+            button.classList.add("selected");
+        }
 
         button.addEventListener("click", () => {
             selectAnswer(index);
@@ -530,30 +314,16 @@ function showQuestion() {
 }
 
 function selectAnswer(selectedIndex) {
-    selectedAnswerIndex = selectedIndex;
-
+    userAnswers[currentQuestionIndex] = selectedIndex;
     const buttons = optionsContainer.getElementsByClassName("btn");
-
-    // Clear previous selection styling
     for (let button of buttons) {
         button.classList.remove("selected");
     }
-
-    // Mark current selection neutrally
     buttons[selectedIndex].classList.add("selected");
-    
-    // Show Next Question button
-    nextBtn.style.display = "block";
 }
 
-nextBtn.addEventListener("click", () => {
-    const currentQuestion = quizData[currentQuestionIndex];
-
-    // Evaluate score silently
-    if (selectedAnswerIndex === currentQuestion.correct) {
-        score++;
-    }
-
+function navigateNext() {
+    clearInterval(timerInterval);
     currentQuestionIndex++;
 
     if (currentQuestionIndex < quizData.length) {
@@ -561,19 +331,43 @@ nextBtn.addEventListener("click", () => {
     } else {
         showResults();
     }
+}
+
+nextBtn.addEventListener("click", () => navigateNext());
+skipBtn.addEventListener("click", () => {
+    userAnswers[currentQuestionIndex] = null;
+    navigateNext();
+});
+backBtn.addEventListener("click", () => {
+    if (currentQuestionIndex > 0) {
+        clearInterval(timerInterval);
+        currentQuestionIndex--;
+        showQuestion();
+    }
 });
 
 function showResults() {
+    clearInterval(timerInterval);
     quizBox.style.display = "none";
     resultBox.style.display = "block";
 
+    let correctCount = 0;
+    let wrongCount = 0;
+    let skippedCount = 0;
+
+    userAnswers.forEach((answer, idx) => {
+        if (answer === null) skippedCount++;
+        else if (answer === quizData[idx].correct) correctCount++;
+        else wrongCount++;
+    });
+
     const totalQuestions = quizData.length;
-    const wrongAnswers = totalQuestions - score;
-    const percentage = ((score / totalQuestions) * 100).toFixed(1);
+    const percentage = ((correctCount / totalQuestions) * 100).toFixed(1);
 
     scoreDisplay.innerText = `Quiz Complete! You scored ${percentage}%`;
-    correctCountEl.innerText = score;
-    wrongCountEl.innerText = wrongAnswers;
+    correctCountEl.innerText = correctCount;
+    wrongCountEl.innerText = wrongCount;
+    skippedCountEl.innerText = skippedCount;
 }
 
 function restartQuiz() {
