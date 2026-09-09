@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sub's Math Quiz Page</title>
+    <title>Sub's Geography Quiz Page</title>
 
     <style>
-        html {
-            font-size: 24px;
-        }
-
         body {
             background-color: #d5dfed;
             font-family: Arial, sans-serif;
@@ -39,7 +35,7 @@
         .quiz-container {
             background-color: white;
             border-radius: 20px;
-            padding: 50px;
+            padding: 40px;
             width: 100%;
             max-width: 600px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -55,27 +51,33 @@
         .btn {
             background-color: #e7e7e7;
             color: #333;
-            border: none;
-            padding: 12px;
+            border: 2px solid transparent;
+            padding: 14px;
             font-size: 18px;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             text-align: left;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
-        .btn:hover {
+        .btn:hover:not(:disabled) {
             background-color: #d4d4d4;
+        }
+
+        /* Neutral selection state while playing */
+        .btn.selected {
+            background-color: #2196F3;
+            color: white;
         }
 
         #next-btn {
             background-color: #B2AC88;
             color: white;
             border: none;
-            padding: 12px;
+            padding: 14px;
             width: 100%;
             font-size: 18px;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             display: none;
         }
@@ -84,10 +86,40 @@
             opacity: 0.9;
         }
 
-        .score-text {
-            font-size: 22px;
-            font-weight: bold;
+        .score-card {
             text-align: center;
+        }
+
+        .score-text {
+            font-size: 26px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .correct-box {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .wrong-box {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
         }
 
         footer {
@@ -108,45 +140,56 @@
 <body>
 
 <div class="header1">
-    <h1> Mathematics Quiz</h1>
+    <h1>Geography Quiz</h1>
 </div>
 
 <main>
     <div class="quiz-container">
 
         <div id="quiz-box">
-            <h3 id="question-num"
-                style="color:#666;font-size:18px;margin:0;">
+            <h3 id="question-num" style="color:#666;font-size:18px;margin:0;">
                 Question 1 of 50
             </h3>
 
-            <h2 id="question"
-                style="margin-top:10px;color:#333;">
+            <h2 id="question" style="margin-top:10px;color:#333;">
                 Question text goes here
             </h2>
 
             <div id="options-container" class="options"></div>
 
-            <button id="next-btn">
-                Next Question
-            </button>
+            <button id="next-btn">Next Question</button>
         </div>
 
         <div id="result-box" style="display:none;">
-            <p class="score-text" id="score-display"></p>
+            <div class="score-card">
+                <div class="score-text" id="score-display"></div>
+                
+                <div class="stats-container">
+                    <div class="stat-box correct-box">
+                        Correct: <span id="correct-count">0</span>
+                    </div>
+                    <div class="stat-box wrong-box">
+                        Wrong: <span id="wrong-count">0</span>
+                    </div>
+                </div>
 
-            <button
-                class="btn"
-                style="width:100%;text-align:center;background:#B2AC88;color:white;"
-                onclick="restartQuiz()">
-                Restart Quiz
-            </button>
+                <button 
+                    class="btn" 
+                    style="width:100%;text-align:center;background:#B2AC88;color:white;font-weight:bold;" 
+                    onclick="restartQuiz()">
+                    Restart Quiz
+                </button>
+            </div>
         </div>
 
     </div>
 </main>
-<script>
 
+<footer>
+    <p>&copy; 2026 Sub's Geography Quiz. All rights reserved.</p>
+</footer>
+
+<script>
 const quizData = [
 
 /* Topographical Sheet */
@@ -604,9 +647,12 @@ const nextBtn = document.getElementById("next-btn");
 const quizBox = document.getElementById("quiz-box");
 const resultBox = document.getElementById("result-box");
 const scoreDisplay = document.getElementById("score-display");
+const correctCountEl = document.getElementById("correct-count");
+const wrongCountEl = document.getElementById("wrong-count");
 
 let currentQuestionIndex = 0;
 let score = 0;
+let selectedAnswerIndex = null;
 
 function startQuiz() {
     currentQuestionIndex = 0;
@@ -619,19 +665,17 @@ function startQuiz() {
 }
 
 function showQuestion() {
+    selectedAnswerIndex = null;
     nextBtn.style.display = "none";
     optionsContainer.innerHTML = "";
 
     const currentQuestion = quizData[currentQuestionIndex];
 
-    questionNumEl.innerText =
-        `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
-
+    questionNumEl.innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
     questionEl.innerText = currentQuestion.question;
 
     currentQuestion.answers.forEach((answer, index) => {
         const button = document.createElement("button");
-
         button.innerText = answer;
         button.classList.add("btn");
 
@@ -644,33 +688,25 @@ function showQuestion() {
 }
 
 function selectAnswer(selectedIndex) {
-    const currentQuestion = quizData[currentQuestionIndex];
+    selectedAnswerIndex = selectedIndex;
 
     const buttons = optionsContainer.getElementsByClassName("btn");
 
-    if (selectedIndex === currentQuestion.correct) {
-        score++;
-    }
-
     for (let button of buttons) {
-        button.disabled = true;
+        button.classList.remove("selected");
     }
 
-    if (selectedIndex === currentQuestion.correct) {
-        buttons[selectedIndex].style.background = "#4CAF50";
-        buttons[selectedIndex].style.color = "white";
-    } else {
-        buttons[selectedIndex].style.background = "#f44336";
-        buttons[selectedIndex].style.color = "white";
-
-        buttons[currentQuestion.correct].style.background = "#4CAF50";
-        buttons[currentQuestion.correct].style.color = "white";
-    }
-
+    buttons[selectedIndex].classList.add("selected");
     nextBtn.style.display = "block";
 }
 
 nextBtn.addEventListener("click", () => {
+    const currentQuestion = quizData[currentQuestionIndex];
+
+    if (selectedAnswerIndex === currentQuestion.correct) {
+        score++;
+    }
+
     currentQuestionIndex++;
 
     if (currentQuestionIndex < quizData.length) {
@@ -684,11 +720,13 @@ function showResults() {
     quizBox.style.display = "none";
     resultBox.style.display = "block";
 
-    const percentage =
-        ((score / quizData.length) * 100).toFixed(1);
+    const totalQuestions = quizData.length;
+    const wrongAnswers = totalQuestions - score;
+    const percentage = ((score / totalQuestions) * 100).toFixed(1);
 
-    scoreDisplay.innerText =
-        `Quiz Complete! You scored ${score} out of ${quizData.length} (${percentage}%)`;
+    scoreDisplay.innerText = `Quiz Complete! You scored ${percentage}%`;
+    correctCountEl.innerText = score;
+    wrongCountEl.innerText = wrongAnswers;
 }
 
 function restartQuiz() {
@@ -696,7 +734,6 @@ function restartQuiz() {
 }
 
 startQuiz();
-
 </script>
 
 </body>
